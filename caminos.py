@@ -53,7 +53,6 @@ CSS_A = """
   letter-spacing:.07em;text-transform:uppercase;color:var(--azul);
   display:inline-flex;align-items:center;gap:6px;margin-top:4px}
 .planes-links em .ic{width:16px;height:16px}
-.dual-sec{background:#fff}
 .dual-sec .g4{margin-top:4px}
 .dual-sec .dual{margin-top:18px}
 .dual-sec .cierre{margin-top:18px;font-size:17px;font-weight:500;
@@ -93,6 +92,7 @@ def _seccion_dimensiones():
       <h2 class="t-lg">Una mirada completa del bienestar</h2>
       <p class="lead">%(dif)s</p>
     </div>
+    <div class="trazo rv" aria-hidden="true"><i></i></div>
     <div class="g4">%(dims)s</div>
   </div>
 </section>""" % {"dif": C.DIFERENCIAL, "dims": S.dimensiones()}
@@ -133,23 +133,28 @@ def _seccion_incluye(p):
     """Reemplaza al comparador dentro de las landings: una landing muestra lo
     que ese plan SI tiene. La comparacion queda en las homes."""
     return """<section class="sec sec--linea" id="incluye">
-  <div class="wrap">
-    <div class="sec__head">
-      <p class="eyebrow">En detalle</p>
-      <h2 class="t-lg">Todo lo que incluye el %(nombre)s</h2>
-      <p class="lead">Sin letra chica. Lo que ves acá es lo que está
-        comprendido en el plan.</p>
+  <div class="wrap fija">
+    <div class="fija__col">
+      <div class="sec__head">
+        <p class="eyebrow">En detalle</p>
+        <h2 class="t-md">Todo lo que incluye el %(nombre)s</h2>
+        <p class="lead">Sin letra chica. Lo que ves acá es lo que está
+          comprendido en el plan.</p>
+      </div>
+      <a class="btn btn-p" href="#formulario">Quiero asesorarme</a>
     </div>
-    %(lista)s
-    <p class="legalito">Los límites, los coseguros y las exclusiones de cada
-      prestación se detallan en las condiciones de afiliación.</p>
+    <div>
+      %(lista)s
+      <p class="legalito">Los límites, los coseguros y las exclusiones de cada
+        prestación se detallan en las condiciones de afiliación.</p>
+    </div>
   </div>
 </section>""" % {"nombre": p["nombre"], "lista": S.incluye(p["clave"])}
 
 
-def _seccion_dual():
+def _seccion_dual(oscuro=False):
     d = C.DUAL
-    return """<section class="sec dual-sec sec--linea" id="dual">
+    return """<section class="sec dual-sec sec--linea%(osc)s" id="dual">
   <div class="wrap">
     <div class="sec__head">
       <p class="eyebrow">%(eye)s</p>
@@ -161,7 +166,8 @@ def _seccion_dual():
     <p class="cierre"><b>%(cta)s</b></p>
     <p class="legalito">%(legal)s</p>
   </div>
-</section>""" % {"eye": d["eyebrow"], "tit": d["titulo"], "baj": d["bajada"],
+</section>""" % {"osc": " osc" if oscuro else "", "eye": d["eyebrow"],
+                 "tit": d["titulo"], "baj": d["bajada"],
                  "cards": S.bloque_dual_cards(), "callout": d["callout"],
                  "cta": d["cta"], "legal": d["legal"]}
 
@@ -216,23 +222,27 @@ def home_a(ruta="../assets/"):
   %(hero)s
   %(datos)s
   %(dims)s
+  %(cita)s
   %(comp)s
   %(dual)s
   %(app)s
   %(form)s
 </main>
-%(pie)s""" % {
+%(pie)s
+%(ctafija)s""" % {
         "proto": S.aviso_proto(),
         "head": S.cabecera(ruta, "index.html"),
         "hero": S.lente("home.jpg", "Una joven espera en la vereda de su barrio",
                         "56% center", _hero_panel_home(), ruta),
         "datos": S.franja_datos(),
         "dims": _seccion_dimensiones(),
+        "cita": S.cita(),
         "comp": _seccion_comparador(),
-        "dual": _seccion_dual(),
+        "dual": _seccion_dual(oscuro=True),
         "app": _seccion_app(),
         "form": _seccion_form(None, "Quiero que me asesoren"),
         "pie": S.pie(ruta),
+        "ctafija": S.cta_fija(),
     }
     return S.documento(
         "OSDEPYM · Planes 1000, 2500 y 4000",
@@ -274,6 +284,7 @@ def plan_a(clave, ruta="../assets/"):
         <p class="eyebrow">Qué incluye</p>
         <h2 class="t-lg">Lo que el %(nombre)s te da</h2>
       </div>
+      <div class="trazo rv" aria-hidden="true"><i></i></div>
       <div class="g4">%(cards)s</div>
     </div>
   </section>
@@ -284,7 +295,8 @@ def plan_a(clave, ruta="../assets/"):
   %(dual)s
   %(form)s
 </main>
-%(pie)s""" % {
+%(pie)s
+%(ctafija)s""" % {
         "proto": S.aviso_proto(),
         "head": S.cabecera(ruta, "index.html", activo=clave),
         "hero": S.lente(p["foto"], p["alt"], p.get("foco", ""),
@@ -294,9 +306,10 @@ def plan_a(clave, ruta="../assets/"):
         "comp": _seccion_incluye(p),
         "app": _seccion_app(),
         "vivi": vivi,
-        "dual": _seccion_dual(),
+        "dual": _seccion_dual(oscuro=True),
         "form": _seccion_form(clave),
         "pie": S.pie(ruta),
+        "ctafija": S.cta_fija(),
     }
     return S.documento(
         "OSDEPYM · %s" % p["nombre"],
@@ -308,19 +321,6 @@ def plan_a(clave, ruta="../assets/"):
 # El recorrido. Oscuro hasta la decisión; de ahí en adelante, claro y quieto.
 
 CSS_B = CSS_A + """
-.osc{background:var(--navy2);color:#fff}
-.osc h2,.osc h3{color:#fff}
-.osc .lead{color:#C7D2E3}
-.osc .card{background:rgba(255,255,255,.04);border-color:var(--lineao)}
-.osc .card h3{color:#fff}
-.osc .card p{color:#AEB8CC}
-.osc .card .ic{color:var(--amar)}
-.osc .dim{background:rgba(255,255,255,.04);border-color:var(--lineao)}
-.osc .dim__body p{color:#AEB8CC}
-.osc .dim__body li{color:#E6EBF3}
-.osc .rubros li{background:rgba(255,255,255,.06);color:#D7E4DC;
-  box-shadow:inset 0 0 0 1px var(--lineao)}
-
 /* ---- apertura: la lente ocupa la pantalla y se abre al entrar ---- */
 .apertura{position:relative;min-height:100vh;min-height:100dvh;display:grid;
   place-items:center;overflow:hidden;background:var(--navy2);isolation:isolate}
@@ -397,21 +397,6 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
 .apertura__num span{font-size:clamp(68px,9.5vw,146px);font-weight:700;
   line-height:.86;letter-spacing:-.045em;opacity:.94}
 @media (max-width:980px){.apertura__num{display:none}}
-/* En oscuro, la lista de prestaciones y las tarjetas de Vivi+ */
-.osc .incluye li{border-bottom-color:var(--lineao);color:#E6EBF3}
-.osc .incluye em{color:#9FB4CE}
-.osc .vivi article{background:rgba(255,255,255,.04);
-  border-color:var(--lineao)}
-.osc .vivi h3{color:#fff}
-.osc .vivi p{color:#AEB8CC}
-.osc .vivi .ic{color:var(--amar)}
-.osc .planes-links a{background:rgba(255,255,255,.04);
-  border-color:var(--lineao)}
-.osc .planes-links a:hover{border-color:var(--amar)}
-.osc .planes-links b{color:#fff}
-.osc .planes-links span{color:#AEB8CC}
-.osc .planes-links em{color:var(--amar)}
-.osc .legalito{color:#8E97AC}
 @media (max-width:860px){
   .paso{grid-template-columns:1fr;gap:16px;position:static}
   .apertura__arco{left:-86%;width:150%}
@@ -514,6 +499,7 @@ def home_b(ruta="../assets/"):
 %(head)s
 <main>
   %(apertura)s
+  %(marq)s
   %(planes)s
   %(datos)s
   <section class="osc ruta" id="recorrido">
@@ -523,7 +509,10 @@ def home_b(ruta="../assets/"):
         <h2 class="t-lg">Una mirada completa del bienestar</h2>
         <p class="lead">%(dif)s</p>
       </div>
-      <div class="pasos">%(pasos)s</div>
+      <div class="pasos">
+        <div class="trazoV" aria-hidden="true"><i></i></div>
+        %(pasos)s
+      </div>
     </div>
   </section>
   <section class="frontera">
@@ -542,18 +531,20 @@ def home_b(ruta="../assets/"):
     %(form)s
   </div>
 </main>
-%(pie)s""" % {
+%(pie)s
+%(ctafija)s""" % {
         "proto": S.aviso_proto(),
         "head": S.cabecera(ruta, "index.html"),
         "apertura": _apertura_b("home.jpg", "Una joven espera en la vereda de su barrio",
                                 C.MENSAJE_1, C.PROPOSITO, ruta),
-        "planes": _planes_b(),
+        "planes": _planes_b(), "marq": S.marquesina(),
         "dif": C.DIFERENCIAL, "pasos": _pasos_b(),
         "comp": _seccion_comparador(),
         "datos": S.franja_datos(),
         "dual": _seccion_dual(),
         "form": _seccion_form(None, "Quiero que me asesoren"),
         "pie": S.pie(ruta),
+        "ctafija": S.cta_fija(),
     }
     doc = S.documento(
         "OSDEPYM · El recorrido · Planes 1000, 2500 y 4000",
@@ -577,6 +568,7 @@ def plan_b(clave, ruta="../assets/"):
 %(head)s
 <main>
   %(apertura)s
+  %(marq)s
   <section class="osc ruta" id="recorrido">
     <div class="wrap">
       <div class="ruta__head">
@@ -606,7 +598,8 @@ def plan_b(clave, ruta="../assets/"):
     %(form)s
   </div>
 </main>
-%(pie)s""" % {
+%(pie)s
+%(ctafija)s""" % {
         "proto": S.aviso_proto(),
         "head": S.cabecera(ruta, "index.html", activo=clave),
         "apertura": _apertura_b(
@@ -614,6 +607,7 @@ def plan_b(clave, ruta="../assets/"):
             p.get("numero"), "%s · %s" % (p["nombre"], p["para"]),
             CTA_PLAN_B),
         "nombre": p["nombre"], "oferta": oferta, "cards": cards,
+        "marq": S.marquesina(),
         "comp": _seccion_incluye(p),
         "datos": S.franja_datos(),
         "app": _seccion_app(),
@@ -621,6 +615,7 @@ def plan_b(clave, ruta="../assets/"):
         "dual": _seccion_dual(),
         "form": _seccion_form(clave),
         "pie": S.pie(ruta),
+        "ctafija": S.cta_fija(),
     }
     doc = S.documento(
         "OSDEPYM · %s · El recorrido" % p["nombre"],

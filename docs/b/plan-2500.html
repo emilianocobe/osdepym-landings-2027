@@ -259,6 +259,105 @@ section{position:relative}
 .proto b{font-weight:700}
 .proto a{color:var(--navy)}
 
+/* ====== EFECTOS ======
+   Seleccion del catalogo de efectos no convencionales. Cada uno entra con
+   un argumento de marca; los que no lo tienen quedaron afuera. El
+   presupuesto decrece hacia el formulario: en la zona de decision no se
+   mueve nada. Todos se apagan con prefers-reduced-motion.             */
+
+/* E107 · Contadores verificables.
+   La prueba se cuenta, no se adjetiva. Solo cifras reales. */
+.cuenta{display:inline-block;min-width:1.7ch;text-align:right}
+
+/* E31 · Trazo por scroll.
+   "Una mirada completa" se dibuja: la linea une las cuatro dimensiones. */
+.trazo{position:relative;height:2px;background:rgba(0,0,0,.08);
+  margin:0 0 clamp(22px,2.6vw,34px);overflow:hidden;border-radius:2px}
+.trazo i{display:block;height:100%;width:0;background:var(--verde);
+  transition:width 1.15s var(--ease)}
+.trazo.visible i{width:100%}
+.trazoV{position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--lineao);border-radius:2px;overflow:hidden}
+.trazoV i{display:block;width:100%;height:0;background:var(--amar)}
+
+/* E85 · Columna fija desfasada.
+   El titulo se queda mientras la lista pasa: contrapunto editorial. */
+.fija{display:grid;gap:clamp(24px,3.6vw,56px);
+  grid-template-columns:minmax(0,300px) minmax(0,1fr);align-items:start}
+.fija__col{position:sticky;top:96px}
+
+/* E16 · Marquesina de datos.
+   La cobertura es larga: se nombra entera. Lo mismo esta en el DOM como
+   lista, asi que la marquesina no es la unica via al dato. */
+.marq{overflow:hidden;background:var(--navy);padding:15px 0;
+  border-top:1px solid var(--lineao);border-bottom:1px solid var(--lineao)}
+.marq__in{display:flex;width:max-content;animation:marq 56s linear infinite}
+.marq span{font-size:12.5px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:#AEB8CC;padding:0 20px;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:20px}
+.marq span::after{content:"";width:5px;height:5px;border-radius:50%;
+  background:var(--amar);flex:none}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* E33 + E87 · Barra fija de accion en telefono.
+   Se retira al llegar al formulario: ahi la accion ya esta a la vista. */
+.ctafija{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.96);border-top:1px solid var(--linea);
+  transform:translateY(115%);transition:transform .26s var(--ease)}
+.ctafija .btn{width:100%;justify-content:center}
+.ctafija.on{transform:none}
+@media (max-width:860px){.ctafija{display:block}}
+
+/* E92 · Borde que se dibuja (tambien en foco, no solo al pasar el mouse) */
+.card,.dim,.vivi article,.planes-links a{position:relative}
+.card::after,.vivi article::after{content:"";position:absolute;inset:-1px;
+  border-radius:inherit;border:2px solid var(--verde);opacity:0;
+  transition:opacity .2s;pointer-events:none}
+.card:hover::after,.vivi article:hover::after,
+.card:focus-within::after,.vivi article:focus-within::after{opacity:1}
+
+/* E02 · Inversion de tema por seccion.
+   Marca la frontera entre dos clases de contenido. */
+.osc{background:var(--navy2);color:#fff}
+.osc h2,.osc h3{color:#fff}
+.osc .lead{color:#C7D2E3}
+.osc .card{background:rgba(255,255,255,.04);border-color:var(--lineao)}
+.osc .card h3{color:#fff}
+.osc .card p{color:#AEB8CC}
+.osc .card .ic{color:var(--amar)}
+.osc .dim{background:rgba(255,255,255,.04);border-color:var(--lineao)}
+.osc .dim__body p{color:#AEB8CC}
+.osc .dim__body li{color:#E6EBF3}
+.osc .incluye li{border-bottom-color:var(--lineao);color:#E6EBF3}
+.osc .incluye em{color:#9FB4CE}
+.osc .vivi article{background:rgba(255,255,255,.04);border-color:var(--lineao)}
+.osc .vivi h3{color:#fff}
+.osc .vivi p{color:#AEB8CC}
+.osc .vivi .ic{color:var(--amar)}
+.osc .planes-links a{background:rgba(255,255,255,.04);border-color:var(--lineao)}
+.osc .planes-links a:hover{border-color:var(--amar)}
+.osc .planes-links b{color:#fff}
+.osc .planes-links span{color:#AEB8CC}
+.osc .planes-links em{color:var(--amar)}
+.osc .legalito{color:#8E97AC}
+.osc .trazo{background:rgba(255,255,255,.12)}
+.osc .trazo i{background:var(--amar)}
+.osc .dual{background:rgba(255,255,255,.05);border-left-color:var(--amar)}
+.osc .dual p{color:#E6EBF3}
+.osc .dual b{color:#fff}
+.dual-sec.osc .cierre{color:var(--amar)}   /* le gana a .dual-sec .cierre */
+.osc .eyebrow{color:#BFD4EA}
+
+/* La cita del proposito: un respiro entre dos grillas */
+.cita{background:var(--verde);color:#fff;
+  padding:clamp(50px,6.4vw,86px) 0}
+.cita p{font-size:clamp(23px,3.1vw,38px);line-height:1.22;font-weight:700;
+  letter-spacing:-.016em;max-width:21ch;text-wrap:balance}
+.cita .filete{margin-bottom:22px}
+.cita small{display:block;margin-top:18px;font-size:12px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:#C6DCCE}
+
 /* ---- reveals (E23 del catálogo: nunca oculta sin JS) ---- */
 .rv{opacity:0;transform:translateY(14px);transition:opacity var(--dur) var(--ease),
   transform var(--dur) var(--ease)}
@@ -281,6 +380,8 @@ html:not(.js) .rv{opacity:1;transform:none}
   .comp tbody th{width:34%}
 }
 @media (max-width:860px){
+  .fija{grid-template-columns:1fr}
+  .fija__col{position:static}
   .lente{flex-direction:column;min-height:0}
   .lente__fondo{position:relative;inset:auto;height:clamp(240px,46vw,350px)}
   .lente__num{width:100%}
@@ -332,7 +433,6 @@ html:not(.js) .rv{opacity:1;transform:none}
   letter-spacing:.07em;text-transform:uppercase;color:var(--azul);
   display:inline-flex;align-items:center;gap:6px;margin-top:4px}
 .planes-links em .ic{width:16px;height:16px}
-.dual-sec{background:#fff}
 .dual-sec .g4{margin-top:4px}
 .dual-sec .dual{margin-top:18px}
 .dual-sec .cierre{margin-top:18px;font-size:17px;font-weight:500;
@@ -349,19 +449,6 @@ html:not(.js) .rv{opacity:1;transform:none}
 @media (max-width:620px){
   .g3,.g4,.g5{grid-template-columns:1fr}
 }
-
-.osc{background:var(--navy2);color:#fff}
-.osc h2,.osc h3{color:#fff}
-.osc .lead{color:#C7D2E3}
-.osc .card{background:rgba(255,255,255,.04);border-color:var(--lineao)}
-.osc .card h3{color:#fff}
-.osc .card p{color:#AEB8CC}
-.osc .card .ic{color:var(--amar)}
-.osc .dim{background:rgba(255,255,255,.04);border-color:var(--lineao)}
-.osc .dim__body p{color:#AEB8CC}
-.osc .dim__body li{color:#E6EBF3}
-.osc .rubros li{background:rgba(255,255,255,.06);color:#D7E4DC;
-  box-shadow:inset 0 0 0 1px var(--lineao)}
 
 /* ---- apertura: la lente ocupa la pantalla y se abre al entrar ---- */
 .apertura{position:relative;min-height:100vh;min-height:100dvh;display:grid;
@@ -439,21 +526,6 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
 .apertura__num span{font-size:clamp(68px,9.5vw,146px);font-weight:700;
   line-height:.86;letter-spacing:-.045em;opacity:.94}
 @media (max-width:980px){.apertura__num{display:none}}
-/* En oscuro, la lista de prestaciones y las tarjetas de Vivi+ */
-.osc .incluye li{border-bottom-color:var(--lineao);color:#E6EBF3}
-.osc .incluye em{color:#9FB4CE}
-.osc .vivi article{background:rgba(255,255,255,.04);
-  border-color:var(--lineao)}
-.osc .vivi h3{color:#fff}
-.osc .vivi p{color:#AEB8CC}
-.osc .vivi .ic{color:var(--amar)}
-.osc .planes-links a{background:rgba(255,255,255,.04);
-  border-color:var(--lineao)}
-.osc .planes-links a:hover{border-color:var(--amar)}
-.osc .planes-links b{color:#fff}
-.osc .planes-links span{color:#AEB8CC}
-.osc .planes-links em{color:var(--amar)}
-.osc .legalito{color:#8E97AC}
 @media (max-width:860px){
   .paso{grid-template-columns:1fr;gap:16px;position:static}
   .apertura__arco{left:-86%;width:150%}
@@ -473,7 +545,7 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
 </header>
 <main>
   <section class="apertura">
-  <div class="apertura__foto apertura__foto--num"></div>
+  <div class="apertura__foto"><img src="../assets/img/plan-2500.jpg" alt="Una familia caminando por un parque" width="1800" height="1200" fetchpriority="high"></div>
   <div class="apertura__velo" aria-hidden="true"></div>
   <div class="apertura__arco" aria-hidden="true"></div>
   <div class="apertura__num" aria-hidden="true"><i>Plan OSDEPYM</i><span>2500</span></div>
@@ -488,6 +560,7 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
     </div>
   </div>
 </section>
+  <div class="marq" aria-hidden="true"><div class="marq__in"><span>Atención primaria y consultas</span><span>Urgencias y emergencias, 24 h</span><span>Centros médicos propios en AMBA</span><span>Cobertura nacional</span><span>Amplia red de prestadores</span><span>Internaciones programadas y de urgencia</span><span>Estudios de baja, mediana y alta complejidad</span><span>Odontología básica y especializada</span><span>Ortodoncia y prótesis</span><span>Óptica</span><span>Medicamentos en farmacias</span><span>Salud mental</span><span>Programas preventivos</span><span>Coseguros diferenciales</span><span>Consultas médicas online con Dr. OSDEPYM</span><span>Viví más OSDEPYM</span><span>App OSDEPYM</span><span>DUAL · accidentes personales</span><span>Atención primaria y consultas</span><span>Urgencias y emergencias, 24 h</span><span>Centros médicos propios en AMBA</span><span>Cobertura nacional</span><span>Amplia red de prestadores</span><span>Internaciones programadas y de urgencia</span><span>Estudios de baja, mediana y alta complejidad</span><span>Odontología básica y especializada</span><span>Ortodoncia y prótesis</span><span>Óptica</span><span>Medicamentos en farmacias</span><span>Salud mental</span><span>Programas preventivos</span><span>Coseguros diferenciales</span><span>Consultas médicas online con Dr. OSDEPYM</span><span>Viví más OSDEPYM</span><span>App OSDEPYM</span><span>DUAL · accidentes personales</span></div></div>
   <section class="osc ruta" id="recorrido">
     <div class="wrap">
       <div class="ruta__head">
@@ -510,19 +583,24 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
   </section>
   <div class="decision">
     <section class="sec sec--linea" id="incluye">
-  <div class="wrap">
-    <div class="sec__head">
-      <p class="eyebrow">En detalle</p>
-      <h2 class="t-lg">Todo lo que incluye el Plan 2500</h2>
-      <p class="lead">Sin letra chica. Lo que ves acá es lo que está
-        comprendido en el plan.</p>
+  <div class="wrap fija">
+    <div class="fija__col">
+      <div class="sec__head">
+        <p class="eyebrow">En detalle</p>
+        <h2 class="t-md">Todo lo que incluye el Plan 2500</h2>
+        <p class="lead">Sin letra chica. Lo que ves acá es lo que está
+          comprendido en el plan.</p>
+      </div>
+      <a class="btn btn-p" href="#formulario">Quiero asesorarme</a>
     </div>
-    <ul class="incluye"><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Atención primaria y consultas</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Urgencias y emergencias, 24 h</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Centros médicos propios en AMBA</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Cobertura nacional<em>Red nacional</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Amplia red de prestadores</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Internaciones programadas y de urgencia</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Estudios de baja, mediana y alta complejidad</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Odontología básica y especializada</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Ortodoncia y prótesis<em>Aranceles preferenciales</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Óptica<em>100% en armazones y cristales estándar, menores de 15</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Medicamentos en farmacias<em>50% de descuento</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Salud mental</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Programas preventivos</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Coseguros diferenciales</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Viví más OSDEPYM</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>App OSDEPYM</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>DUAL · accidentes personales</span></li></ul>
-    <p class="legalito">Los límites, los coseguros y las exclusiones de cada
-      prestación se detallan en las condiciones de afiliación.</p>
+    <div>
+      <ul class="incluye"><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Atención primaria y consultas</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Urgencias y emergencias, 24 h</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Centros médicos propios en AMBA</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Cobertura nacional<em>Red nacional</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Amplia red de prestadores</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Internaciones programadas y de urgencia</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Estudios de baja, mediana y alta complejidad</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Odontología básica y especializada</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Ortodoncia y prótesis<em>Aranceles preferenciales</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Óptica<em>100% en armazones y cristales estándar, menores de 15</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Medicamentos en farmacias<em>50% de descuento</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Salud mental</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Programas preventivos</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Coseguros diferenciales</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Viví más OSDEPYM</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>App OSDEPYM</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>DUAL · accidentes personales</span></li></ul>
+      <p class="legalito">Los límites, los coseguros y las exclusiones de cada
+        prestación se detallan en las condiciones de afiliación.</p>
+    </div>
   </div>
 </section>
-    <section class="datos" aria-label="OSDEPYM en datos"><div class="wrap"><ul><li><b>Más de 55 años</b><span>acompañando a trabajadores independientes</span></li><li><b>Centros médicos propios</b><span>en AMBA, con atención en instalaciones propias</span></li><li><b>Marca federal</b><span>presente en distintos lugares y realidades del país</span></li><li><b>Hablás con personas</b><span>sucursales físicas y profesionales expertos</span></li></ul></div></section>
+    <section class="datos" aria-label="OSDEPYM en datos"><div class="wrap"><ul><li><b>Más de <span class="cuenta" data-a="55">55</span> años</b><span>acompañando a trabajadores independientes</span></li><li><b>Centros médicos propios</b><span>en AMBA, con atención en instalaciones propias</span></li><li><b>Marca federal</b><span>presente en distintos lugares y realidades del país</span></li><li><b>Hablás con personas</b><span>sucursales físicas y profesionales expertos</span></li></ul></div></section>
     <section class="sec">
   <div class="wrap">
     <div class="sec__head">
@@ -606,6 +684,7 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
     </p>
   </div>
 </footer>
+<div class="ctafija"><a class="btn btn-p" href="#formulario">Quiero asesorarme</a></div>
 <script>
 document.documentElement.classList.add('js');
 (function(){
@@ -620,6 +699,63 @@ document.documentElement.classList.add('js');
   } else {
     document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('visible'); });
   }
+    /* E107 · contadores. Con movimiento reducido queda la cifra final. */
+  document.querySelectorAll('.cuenta').forEach(function(el){
+    var fin = parseInt(el.getAttribute('data-a'), 10);
+    if (isNaN(fin) || RM) return;
+    var corrio = false;
+    var obs = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (!e.isIntersecting || corrio) return;
+        corrio = true; obs.disconnect();
+        var t0 = performance.now(), dur = 950;
+        (function paso(t){
+          var k = Math.min(1, (t - t0) / dur);
+          el.textContent = Math.round(fin * (1 - Math.pow(1 - k, 3)));
+          if (k < 1) requestAnimationFrame(paso); else el.textContent = fin;
+        })(t0);
+      });
+    }, {threshold:.6});
+    obs.observe(el);
+  });
+
+  /* E31 · el trazo vertical del recorrido se dibuja con el scroll */
+  var trazos = [].slice.call(document.querySelectorAll('.trazoV'));
+  if (trazos.length && !RM) {
+    var pend = false;
+    var pintar = function(){
+      pend = false;
+      trazos.forEach(function(t){
+        var c = t.parentElement.getBoundingClientRect();
+        var k = (window.innerHeight * .6 - c.top) / c.height;
+        t.firstElementChild.style.height =
+          Math.max(0, Math.min(1, k)) * 100 + '%';
+      });
+    };
+    addEventListener('scroll', function(){
+      if (!pend) { pend = true; requestAnimationFrame(pintar); }
+    }, {passive:true});
+    pintar();
+  }
+
+  /* E33 + E87 · la barra de accion aparece pasado el encabezado y se
+     retira cuando el formulario ya esta a la vista */
+  var barra = document.querySelector('.ctafija');
+  if (barra) {
+    var form = document.getElementById('formulario');
+    var verForm = false;
+    if (form && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){
+        verForm = es[0].isIntersecting; mover();
+      }, {threshold:0}).observe(form);
+    }
+    var mover = function(){
+      barra.classList.toggle('on', window.scrollY > 460 && !verForm);
+    };
+    addEventListener('scroll', mover, {passive:true});
+    mover();
+  }
+
   document.querySelectorAll('[data-form]').forEach(function(caja){
     var ph = caja.querySelector('.form__ph');
     if (!ph) return;

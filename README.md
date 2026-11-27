@@ -87,6 +87,28 @@ enumera su propia página actual.
 Las dos vistas salen del mismo dato, así que no pueden contradecirse: la
 lista de cada landing se deriva del mismo cuadro.
 
+## Los efectos
+
+No son decoración: cada uno entró contra las cinco preguntas del método
+—¿tiene argumento de marca? ¿qué rompe? ¿qué cuesta? ¿se nota como truco?
+¿dónde vive?— y el presupuesto de movimiento decrece hacia el formulario.
+En la zona de decisión no se mueve nada. Todos se apagan por completo con
+`prefers-reduced-motion`.
+
+| Efecto | Dónde | Argumento |
+|---|---|---|
+| Contador verificable | Franja de pruebas | La prueba se cuenta, no se adjetiva. Solo la cifra real. |
+| Trazo por scroll | Las cuatro dimensiones, el recorrido del camino B | "Una mirada completa" se dibuja; el recorrido se recorre. |
+| Columna fija desfasada | "Todo lo que incluye" | El título se queda mientras la lista pasa. |
+| Inversión de tema | DUAL en el camino A, la decisión en el B | Marca la frontera entre dos clases de contenido. |
+| Marquesina de datos | Camino B | La cobertura es larga: se nombra entera. El mismo dato está en la lista. |
+| Barra fija de acción | Teléfono | Se retira al llegar al formulario, donde la acción ya está a la vista. |
+| Apariciones por scroll | Global, salvo encabezado | Ritmo de lectura; nunca oculta contenido sin JS. |
+
+Quedaron afuera los cursores, los glitches, el scroll horizontal y la
+distorsión: no informan nada acá y le hablan al revés a un público que
+teme los gastos ocultos.
+
 ## Cómo se construye
 
 ```

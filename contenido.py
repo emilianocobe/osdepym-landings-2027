@@ -41,9 +41,9 @@ PROPOSITO = ("OSDEPYM genera las condiciones para que las personas vivan, "
 MENSAJE_1 = "Una buena cobertura en salud no es un privilegio de pocos."
 
 # Lámina 17.
-DIFERENCIAL = ("Una mirada completa del bienestar. OSDEPYM incorpora "
-               "dimensiones económicas, profesionales, emocionales y sociales "
-               "porque entiende que la salud va más allá de lo físico.")
+DIFERENCIAL = ("OSDEPYM incorpora dimensiones económicas, profesionales, "
+               "emocionales y sociales porque entiende que la salud va "
+               "más allá de lo físico.")
 
 # --------------------------------------------- las cuatro dimensiones (l.18)
 # El orden es el de la lámina. "Cobertura de accidentes personales" figuraba
@@ -111,9 +111,10 @@ PLANES = [
                    "esenciales con copagos accesibles."),
         "oferta": None,
         "form": "24/prqjij",
-        "foto": None,
+        "foto": "plan-1000.jpg",
+        "foco": "center 34%",
         "numero": "1000",
-        "alt": "Plan 1000",
+        "alt": "El dueño de un local, en la puerta de su negocio",
         "destacados": [
             ("Atención primaria",
              "Consultas médicas generales para tu salud cotidiana."),
@@ -136,9 +137,10 @@ PLANES = [
         "oferta": "30% de descuento durante los primeros 6 meses",
         "oferta_cond": "Para personas de hasta 50 años.",
         "form": "26/jf3a3u",
-        "foto": None,
+        "foto": "plan-2500.jpg",
+        "foco": "center 38%",
         "numero": "2500",
-        "alt": "Plan 2500",
+        "alt": "Una familia caminando por un parque",
         "destacados": [
             ("Amplia red de prestadores",
              "Acceso a una extensa red de profesionales y centros médicos."),
@@ -161,9 +163,10 @@ PLANES = [
         "oferta": "30% de descuento durante los primeros 6 meses",
         "oferta_cond": "Para personas de hasta 50 años.",
         "form": "28/o14tpu",
-        "foto": None,
+        "foto": "plan-4000.jpg",
+        "foco": "center 32%",
         "numero": "4000",
-        "alt": "Plan 4000",
+        "alt": "Una mujer en el living de su casa",
         "destacados": [
             ("Amplia red de prestadores",
              "Acceso a una extensa red de profesionales y centros médicos."),
@@ -295,10 +298,14 @@ DUAL = {
 # Lámina 38: proof points del mensaje "una marca humana". Todos verificables.
 
 PRUEBAS = [
-    (MARCA["trayectoria"], "acompañando a trabajadores independientes"),
-    ("Centros médicos propios", "en AMBA, con atención en instalaciones propias"),
-    ("Marca federal", "presente en distintos lugares y realidades del país"),
-    ("Hablás con personas", "sucursales físicas y profesionales expertos"),
+    {"n": 55, "pre": "Más de ", "post": " años",
+     "sub": "acompañando a trabajadores independientes"},
+    {"txt": "Centros médicos propios",
+     "sub": "en AMBA, con atención en instalaciones propias"},
+    {"txt": "Marca federal",
+     "sub": "presente en distintos lugares y realidades del país"},
+    {"txt": "Hablás con personas",
+     "sub": "sucursales físicas y profesionales expertos"},
 ]
 
 # --------------------------------------------------------------- audiencias
