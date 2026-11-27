@@ -61,6 +61,16 @@ _IC = {
     "campana":  "M12 3a5.5 5.5 0 0 1 5.5 5.5c0 4 1.5 5.5 1.5 5.5H5s1.5-1.5 1.5-5.5A5.5 5.5 0 0 1 12 3zM10 17.5a2 2 0 0 0 4 0",
     "flecha":   "M5 12h13M13 6.5l5.5 5.5L13 17.5",
     "lupa":     "M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zM16.2 16.2L21 21",
+    # Rubros de Vivi mas OSDEPYM: mismo trazo, misma caja 24.
+    "carrito":   "M3 4h2.2l2.3 10.4h9.6L19 7.4H6.1M9.5 19a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM16.5 19a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z",
+    "remera":    "M9 3.5L5 5.5l1.4 4L8 9v11.5h8V9l1.6.5L19 5.5l-4-2a3 3 0 0 1-6 0z",
+    "pesa":      "M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10",
+    "flor":      "M12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2zM12 9.4C12 6.4 10.4 4 8.4 4S5.5 6.1 6.8 8.3M12 14.6c0 3 1.6 5.4 3.6 5.4s2.9-2.1 1.6-4.3M9.4 10.7C6.8 9.2 4 9.4 3 11.2s.5 3.7 3 3.4M14.6 13.3c2.6 1.5 5.4 1.3 6.4-.5s-.5-3.7-3-3.4",
+    "llave":     "M14.5 3a6.5 6.5 0 0 1 2.6 12.4L15 17.5l-2 2-2.5-.5-.5 2.5-3-3 7.1-7.1A6.5 6.5 0 0 1 14.5 3zM16.6 7.4h.01",
+    "auto":      "M4.5 16.5v2.5h2.6v-2.5M16.9 16.5V19h2.6v-2.5M3.5 16.5h17v-4l-1.7-4.3a2 2 0 0 0-1.9-1.2H7.1a2 2 0 0 0-1.9 1.2L3.5 12.5zM3.5 12.5h17M7 14.4h.01M17 14.4h.01",
+    "cine":      "M3 7.5h18v13H3zM3 7.5l3.5-4M9.5 7.5L13 3.5M16 7.5L19.5 3.5M10 11.5l5 2.5-5 2.5z",
+    "valija":    "M4.5 8h15v12h-15zM9 8V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V8M9.5 12v4M14.5 12v4",
+    "birrete":   "M12 4l9 4.2-9 4.2-9-4.2zM6.5 10.5v5c0 1.4 2.5 2.6 5.5 2.6s5.5-1.2 5.5-2.6v-5M21 8.2v5",
 }
 
 ICONOS_APP = ["credencial", "cartilla", "medico", "doc", "campana"]
@@ -150,39 +160,40 @@ section{position:relative}
 :focus-visible{outline:3px solid var(--amar);outline-offset:3px}
 
 /* ---- LA CURVA: media elipse en el borde del panel ---- */
-.lente{position:relative;display:grid;grid-template-columns:1fr 1fr;
-  align-items:stretch;min-height:clamp(420px,56vw,620px)}
-.lente__foto{position:relative;overflow:hidden;background:var(--navy)}
-/* Cuando la pagina es de producto y no de persona, la cara izquierda
-   es grafica: el numero del plan en Gotham, sobre el azul de marca. */
-.lente__foto--num{display:grid;place-items:center;background:
-  radial-gradient(118%% 88%% at 28%% 18%%,#1B5AA0 0%%,#123B6B 46%%,#0D2746 100%%)}
-.lente__num{display:flex;flex-direction:column;align-items:center;gap:12px;
+.lente{position:relative;display:flex;align-items:stretch;overflow:hidden;
+  min-height:clamp(430px,56vw,640px)}
+/* El fondo va a sangre DEBAJO del panel: detras del arco se ve la foto o el
+   color, nunca el blanco de la pagina. Era el hueco que marco el cliente. */
+.lente__fondo{position:absolute;inset:0;z-index:0;background:var(--navy)}
+.lente__fondo img{width:100%%;height:100%%;object-fit:cover;display:block}
+/* Cuando la pagina es de producto y no de persona, la cara es grafica. En
+   verde de marca, para no apilar dos azules contra el panel. */
+.lente__fondo--verde{background:
+  radial-gradient(122%% 94%% at 24%% 14%%,#2E7D4F 0%%,#1F5C38 46%%,#10301D 100%%)}
+.lente__num{position:absolute;inset:0;width:46%%;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:12px;
   color:#fff;padding:40px 20px;text-align:center}
 .lente__num i{font-style:normal;font-size:12px;font-weight:700;
-  letter-spacing:.22em;text-transform:uppercase;color:#9FB4CE}
-.lente__num span{font-size:clamp(78px,12vw,164px);font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:#BFD9C8}
+.lente__num span{font-size:clamp(78px,11vw,158px);font-weight:700;
   line-height:.88;letter-spacing:-.045em}
 .lente__num .filete{margin-top:6px}
-.lente__foto img{width:100%%;height:100%%;object-fit:cover;display:block}
-.lente__panel{position:relative;background:
-  linear-gradient(140deg,#144580 0%%,#163F72 48%%,var(--navy) 100%%);
+.lente__panel{position:relative;z-index:2;margin-left:auto;width:62%%;
+  background:linear-gradient(140deg,#144580 0%%,#163F72 48%%,var(--navy) 100%%);
   color:#fff;display:flex;flex-direction:column;justify-content:center;
   gap:22px;padding:clamp(34px,4.4vw,64px) clamp(26px,4vw,64px);
-  margin-left:-10%%;
-  /* La curva de las laminas es un arco suave que recorre todo el alto,
-     no un circulo: un radio horizontal mas chico la aplana. */
-  border-top-left-radius:30%% 50%%;border-bottom-left-radius:30%% 50%%;
-  padding-left:clamp(60px,12vw,170px)}
+  border-top-left-radius:34%% 50%%;border-bottom-left-radius:34%% 50%%;
+  padding-left:clamp(56px,9vw,140px)}
 .lente__panel > *{position:relative;z-index:1}
 
 /* ---- franja de datos ---- */
-.datos{background:var(--navy);color:#fff}
+/* Verde, no navy: separa del azul del encabezado en vez de apilar tonos. */
+.datos{background:var(--verde);color:#fff}
 .datos ul{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
-  background:var(--lineao)}
-.datos li{background:var(--navy);padding:26px 22px}
+  background:rgba(255,255,255,.16)}
+.datos li{background:var(--verde);padding:26px 22px}
 .datos b{display:block;font-size:19px;font-weight:700;margin-bottom:5px}
-.datos span{font-size:14px;line-height:1.4;color:#AEB8CC;font-weight:300}
+.datos span{font-size:14px;line-height:1.4;color:#C6DCCE;font-weight:300}
 
 /* ---- tarjetas ---- */
 .cards{display:grid;gap:14px}
@@ -237,6 +248,22 @@ section{position:relative}
 .comp-hint{display:none;font-size:12.5px;color:var(--suave2);
   font-weight:300;margin-top:10px}
 
+/* ---- lo que incluye cada plan (reemplaza al comparador en las landings) ---- */
+.incluye{display:grid;grid-template-columns:repeat(2,1fr);gap:0 clamp(24px,3vw,44px)}
+.incluye li{display:flex;gap:11px;align-items:flex-start;padding:11px 0;
+  border-bottom:1px solid var(--linea);font-size:15.5px;line-height:1.4}
+.incluye li .ic{width:19px;height:19px;color:var(--verdecl);margin-top:2px}
+.incluye em{font-style:normal;display:block;font-size:13px;color:var(--suave);
+  font-weight:300;margin-top:3px}
+
+/* ---- Vivi mas: tarjetas con icono, no fichas sueltas ---- */
+.vivi{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+.vivi article{border:1px solid var(--linea);border-radius:12px;
+  padding:22px 20px;background:#fff}
+.vivi .ic{color:var(--verde);margin-bottom:11px}
+.vivi h3{font-size:16px;margin-bottom:7px;color:var(--verde);line-height:1.3}
+.vivi p{font-size:14.5px;line-height:1.45;color:var(--suave);font-weight:300}
+
 /* ---- formulario de Bitrix ---- */
 .form{background:#fff;border:1px solid var(--linea);border-radius:14px;
   padding:clamp(22px,3vw,34px);box-shadow:0 18px 48px -28px rgba(20,40,80,.4)}
@@ -285,6 +312,8 @@ section{position:relative}
 .head nav a{font-size:14px;font-weight:500;color:var(--tinta);
   text-decoration:none}
 .head nav a:hover{color:var(--azul)}
+.head nav a.act{color:var(--verde);font-weight:700;
+  box-shadow:inset 0 -2px 0 var(--verde)}
 .head .btn{padding:12px 20px;font-size:12.5px}
 
 /* ---- pie ---- */
@@ -323,20 +352,24 @@ html:not(.js) .rv{opacity:1;transform:none}
 /* ---- responsive ---- */
 @media (max-width:1000px){
   .datos ul{grid-template-columns:repeat(2,1fr)}
+  .vivi{grid-template-columns:repeat(2,1fr)}
   .comp{font-size:14px}
   .comp th,.comp td{padding:11px 9px}
   .comp tbody th{width:34%%}
 }
 @media (max-width:860px){
-  .lente{grid-template-columns:1fr;min-height:0}
-  .lente__foto{height:clamp(240px,46vw,360px)}
-  .lente__panel{margin-left:0;margin-top:-13%%;padding-left:clamp(26px,6vw,44px);
-    padding-top:clamp(56px,13vw,86px);
-    border-radius:50%% 50%% 0 0 / 13%% 13%% 0 0}
+  .lente{flex-direction:column;min-height:0}
+  .lente__fondo{position:relative;inset:auto;height:clamp(240px,46vw,350px)}
+  .lente__num{width:100%%}
+  .lente__panel{width:100%%;margin-left:0;margin-top:-11%%;
+    padding-left:clamp(26px,6vw,44px);padding-top:clamp(56px,13vw,86px);
+    border-radius:50%% 50%% 0 0 / 11%% 11%% 0 0}
   .head nav{display:none}
+  .incluye{grid-template-columns:1fr}
 }
 @media (max-width:620px){
   :root{--gut:20px}
+  .vivi{grid-template-columns:1fr}
   .comp-hint{display:block}
   .comp thead th.p{font-size:13px}
   .comp td{font-size:12.5px;padding:10px 5px}
@@ -355,11 +388,12 @@ def css_base(ruta="assets/"):
 # ------------------------------------------------------------- componentes
 
 def cabecera(ruta="assets/", inicio="index.html", activo=""):
+    """Los tres planes SIEMPRE a mano: son las paginas que se usan."""
     nav = []
-    for href, txt in (("planes.html#comparador", "Comparar planes"),
-                      ("#dimensiones", "Más que cobertura"),
-                      ("#dual", "DUAL")):
-        nav.append('<a href="%s">%s</a>' % (href, txt))
+    for clave in ("1000", "2500", "4000"):
+        cls = ' class="act" aria-current="page"' if clave == activo else ""
+        nav.append('<a href="plan-%s.html"%s>Plan %s</a>' % (clave, cls, clave))
+    nav.append('<a href="#dual">DUAL</a>')
     return """<header class="head">
   <div class="wrap head__in">
     <a class="head__logo" href="%(inicio)s" aria-label="OSDEPYM, inicio">
@@ -407,11 +441,11 @@ def aviso_proto():
 def lente(foto, alt, foco, contenido_panel, ruta="assets/", numero=None):
     """El gesto de marca: cara izquierda (foto o numero) y panel con el arco."""
     if foto:
-        izq = ('<div class="lente__foto"><img src="%simg/%s" alt="%s" '
-               'style="object-position:%s" width="1400" height="1000" '
+        izq = ('<div class="lente__fondo"><img src="%simg/%s" alt="%s" '
+               'style="object-position:%s" width="1800" height="1200" '
                'fetchpriority="high"></div>' % (ruta, foto, alt, foco))
     else:
-        izq = ('<div class="lente__foto lente__foto--num">'
+        izq = ('<div class="lente__fondo lente__fondo--verde">'
                '<div class="lente__num"><i>Plan OSDEPYM</i><span>%s</span>'
                '<div class="filete" aria-hidden="true"><i></i><i></i><i></i>'
                '</div></div></div>' % numero)
@@ -481,7 +515,25 @@ def bloque_app():
 
 
 def bloque_vivi():
-    return "".join('<li>%s</li>' % r for r in C.VIVI["rubros"])
+    return "".join(
+        '<article class="rv">%s<h3>%s</h3><p>%s</p></article>' % (ico(k), t, d)
+        for k, t, d in C.VIVI["rubros"])
+
+
+def incluye(clave):
+    """Lo que ese plan incluye, derivado del mismo cuadro comparativo.
+
+    En las landings reemplaza al comparador: una landing no tiene por que
+    mostrarle al visitante todo lo que su plan NO tiene."""
+    col = {"1000": 1, "2500": 2, "4000": 3}[clave]
+    items = []
+    for fila in C.COMPARADOR:
+        v = fila[col]
+        if v == "no":
+            continue
+        extra = "" if v == "si" else "<em>%s</em>" % v
+        items.append("<li>%s<span>%s%s</span></li>" % (ico("check"), fila[0], extra))
+    return '<ul class="incluye">%s</ul>' % "".join(items)
 
 
 def bloque_dual_cards():

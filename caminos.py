@@ -114,19 +114,37 @@ def _seccion_app():
 
 
 def _seccion_vivi():
+    """Nueve rubros con icono y texto. Reducirlo a fichas sueltas le hacia
+    perder la jerarquia que tiene como diferencial de la dimension social."""
     v = C.VIVI
     return """<section class="sec sec--crema">
-  <div class="wrap g2">
-    <div class="vivi__txt">
-      <div class="sec__head">
-        <p class="eyebrow">Dimensión social</p>
-        <h2 class="t-lg">%(tit)s</h2>
-      </div>
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="eyebrow">Dimensión social</p>
+      <h2 class="t-lg">%(tit)s</h2>
       <p class="lead">%(baj)s</p>
     </div>
-    <ul class="rubros">%(rub)s</ul>
+    <div class="vivi">%(rub)s</div>
   </div>
 </section>""" % {"tit": v["titulo"], "baj": v["bajada"], "rub": S.bloque_vivi()}
+
+
+def _seccion_incluye(p):
+    """Reemplaza al comparador dentro de las landings: una landing muestra lo
+    que ese plan SI tiene. La comparacion queda en las homes."""
+    return """<section class="sec sec--linea" id="incluye">
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="eyebrow">En detalle</p>
+      <h2 class="t-lg">Todo lo que incluye el %(nombre)s</h2>
+      <p class="lead">Sin letra chica. Lo que ves acá es lo que está
+        comprendido en el plan.</p>
+    </div>
+    %(lista)s
+    <p class="legalito">Los límites, los coseguros y las exclusiones de cada
+      prestación se detallan en las condiciones de afiliación.</p>
+  </div>
+</section>""" % {"nombre": p["nombre"], "lista": S.incluye(p["clave"])}
 
 
 def _seccion_dual():
@@ -234,7 +252,7 @@ def _hero_panel_plan(p):
 %(oferta)s
 <div class="hero__cta">
   <a class="btn btn-p" href="#formulario">Quiero asesorarme</a>
-  <a class="btn btn-o" href="#comparador">Comparar con los otros planes</a>
+  <a class="btn btn-o" href="#incluye">Ver todo lo que incluye</a>
 </div>""" % {"nombre": p["nombre"], "para": p["para"], "tit": p["titular"],
              "baj": p["bajada"], "oferta": oferta}
 
@@ -268,12 +286,12 @@ def plan_a(clave, ruta="../assets/"):
 </main>
 %(pie)s""" % {
         "proto": S.aviso_proto(),
-        "head": S.cabecera(ruta, "index.html"),
+        "head": S.cabecera(ruta, "index.html", activo=clave),
         "hero": S.lente(p["foto"], p["alt"], p.get("foco", ""),
                         _hero_panel_plan(p), ruta, p.get("numero")),
         "nombre": p["nombre"], "cards": cards,
         "datos": S.franja_datos(),
-        "comp": _seccion_comparador(destacado=clave, con_links=False),
+        "comp": _seccion_incluye(p),
         "app": _seccion_app(),
         "vivi": vivi,
         "dual": _seccion_dual(),
@@ -367,8 +385,33 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
 /* de acá en adelante no hay más efectos: es contrato, no sugerencia */
 .decision .rv{opacity:1;transform:none}
 
-.apertura__foto--num{background:radial-gradient(120% 90% at 26% 16%,
-  #1B5AA0 0%,#123B6B 44%,#0D2746 100%)}
+/* Verde, no azul: el panel y el velo ya son azules. */
+.apertura__foto--num{background:radial-gradient(122% 92% at 24% 14%,
+  #2E7D4F 0%,#1F5C38 46%,#10301D 100%)}
+.apertura__cta{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+.apertura__num{position:absolute;z-index:2;right:clamp(24px,6vw,86px);
+  top:50%;transform:translateY(-50%);display:flex;flex-direction:column;
+  align-items:flex-end;gap:8px;color:#fff;text-align:right}
+.apertura__num i{font-style:normal;font-size:12px;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:#BFD9C8}
+.apertura__num span{font-size:clamp(68px,9.5vw,146px);font-weight:700;
+  line-height:.86;letter-spacing:-.045em;opacity:.94}
+@media (max-width:980px){.apertura__num{display:none}}
+/* En oscuro, la lista de prestaciones y las tarjetas de Vivi+ */
+.osc .incluye li{border-bottom-color:var(--lineao);color:#E6EBF3}
+.osc .incluye em{color:#9FB4CE}
+.osc .vivi article{background:rgba(255,255,255,.04);
+  border-color:var(--lineao)}
+.osc .vivi h3{color:#fff}
+.osc .vivi p{color:#AEB8CC}
+.osc .vivi .ic{color:var(--amar)}
+.osc .planes-links a{background:rgba(255,255,255,.04);
+  border-color:var(--lineao)}
+.osc .planes-links a:hover{border-color:var(--amar)}
+.osc .planes-links b{color:#fff}
+.osc .planes-links span{color:#AEB8CC}
+.osc .planes-links em{color:var(--amar)}
+.osc .legalito{color:#8E97AC}
 @media (max-width:860px){
   .paso{grid-template-columns:1fr;gap:16px;position:static}
   .apertura__arco{left:-86%;width:150%}
@@ -397,27 +440,64 @@ def _pasos_b():
     return "".join(out)
 
 
-def _apertura_b(foto, alt, h1, lead, ruta, numero=None):
+def _planes_b():
+    """En el camino B hacian falta: no habia como llegar a las landings."""
+    ls = []
+    for p in C.PLANES:
+        ls.append('<a href="plan-%s.html"><b>%s</b><span>%s</span>'
+                  '<em>Ver el plan %s</em></a>'
+                  % (p["clave"], p["nombre"], p["para"], S.ico("flecha")))
+    return """<section class="sec osc" id="planes">
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="eyebrow sobre-oscuro">Las tres puertas de entrada</p>
+      <h2 class="t-lg">Elegí tu plan</h2>
+    </div>
+    <div class="planes-links">%s</div>
+  </div>
+</section>""" % "".join(ls)
+
+
+CTA_HOME_B = """<a class="btn btn-p" href="#planes">Ver los tres planes</a>
+        <a class="apertura__scroll" href="#recorrido">Empezá el recorrido
+          <i aria-hidden="true"></i></a>"""
+
+CTA_PLAN_B = """<a class="btn btn-p" href="#formulario">Quiero asesorarme</a>
+        <a class="apertura__scroll" href="#incluye">Ver todo lo que incluye
+          <i aria-hidden="true"></i></a>"""
+
+
+def _apertura_b(foto, alt, h1, lead, ruta, numero=None, eyebrow=None,
+                cta=None):
     if foto:
         fondo = ('<div class="apertura__foto"><img src="%simg/%s" alt="%s" '
                  'width="1800" height="1200" fetchpriority="high"></div>'
                  % (ruta, foto, alt))
     else:
         fondo = '<div class="apertura__foto apertura__foto--num"></div>'
+    # El numero del plan tiene que estar: es lo que dice de que pagina se
+    # trata antes de leer una sola linea.
+    num = ""
+    if numero:
+        num = ('<div class="apertura__num" aria-hidden="true">'
+               '<i>Plan OSDEPYM</i><span>%s</span></div>' % numero)
+    vol = ('<p class="eyebrow sobre-oscuro">%s</p>' % eyebrow) if eyebrow else (
+        '<div class="filete" aria-hidden="true"><i></i><i></i><i></i></div>')
     return """<section class="apertura">
   %(fondo)s
   <div class="apertura__velo" aria-hidden="true"></div>
   <div class="apertura__arco" aria-hidden="true"></div>
+  %(num)s
   <div class="wrap">
     <div class="apertura__in">
-      <div class="filete" aria-hidden="true"><i></i><i></i><i></i></div>
+      %(vol)s
       <h1>%(h1)s</h1>
       <p class="lead">%(lead)s</p>
-      <a class="apertura__scroll" href="#recorrido">Empezá el recorrido
-        <i aria-hidden="true"></i></a>
+      <div class="apertura__cta">%(cta)s</div>
     </div>
   </div>
-</section>""" % {"fondo": fondo, "h1": h1, "lead": lead}
+</section>""" % {"fondo": fondo, "h1": h1, "lead": lead, "num": num,
+                 "vol": vol, "cta": cta or CTA_HOME_B}
 
 
 JS_B = """
@@ -434,6 +514,8 @@ def home_b(ruta="../assets/"):
 %(head)s
 <main>
   %(apertura)s
+  %(planes)s
+  %(datos)s
   <section class="osc ruta" id="recorrido">
     <div class="wrap">
       <div class="ruta__head">
@@ -456,7 +538,6 @@ def home_b(ruta="../assets/"):
   </section>
   <div class="decision">
     %(comp)s
-    %(datos)s
     %(dual)s
     %(form)s
   </div>
@@ -466,6 +547,7 @@ def home_b(ruta="../assets/"):
         "head": S.cabecera(ruta, "index.html"),
         "apertura": _apertura_b("home.jpg", "Una joven espera en la vereda de su barrio",
                                 C.MENSAJE_1, C.PROPOSITO, ruta),
+        "planes": _planes_b(),
         "dif": C.DIFERENCIAL, "pasos": _pasos_b(),
         "comp": _seccion_comparador(),
         "datos": S.franja_datos(),
@@ -526,11 +608,13 @@ def plan_b(clave, ruta="../assets/"):
 </main>
 %(pie)s""" % {
         "proto": S.aviso_proto(),
-        "head": S.cabecera(ruta, "index.html"),
-        "apertura": _apertura_b(p["foto"], p["alt"], p["titular"],
-                                p["bajada"], ruta, p.get("numero")),
+        "head": S.cabecera(ruta, "index.html", activo=clave),
+        "apertura": _apertura_b(
+            p["foto"], p["alt"], p["titular"], p["bajada"], ruta,
+            p.get("numero"), "%s · %s" % (p["nombre"], p["para"]),
+            CTA_PLAN_B),
         "nombre": p["nombre"], "oferta": oferta, "cards": cards,
-        "comp": _seccion_comparador(destacado=clave, con_links=False),
+        "comp": _seccion_incluye(p),
         "datos": S.franja_datos(),
         "app": _seccion_app(),
         "vivi": vivi,

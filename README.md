@@ -73,12 +73,19 @@ El estilo del formulario se reescribe por CSS desde el contenedor padre, sin
 tocar la funcionalidad. Lo que no se puede por código es agregar o renombrar
 campos: eso se hace en el diseñador de Bitrix24.
 
-## El comparador
+## Dónde está la comparación y dónde no
 
-El cuadro compara los tres planes según **el alcance publicado de cada uno**.
-Para el Plan 1000 se toma la lista cerrada que enumera su propia página
-actual. Los límites, los coseguros y las exclusiones se detallan en las
-condiciones de afiliación, y así lo dice la nota al pie del cuadro.
+**Las landings de plan no comparan.** Cada una muestra, en una lista de dos
+columnas, todo lo que ese plan **sí** incluye. Una landing no tiene por qué
+mostrarle al visitante las trece cosas que su plan no tiene.
+
+**El comparador vive en las homes**, que son páginas de organización: ahí sí
+tiene sentido ver los tres al lado del otro antes de elegir. Compara según el
+alcance publicado de cada plan; para el 1000 se toma la lista cerrada que
+enumera su propia página actual.
+
+Las dos vistas salen del mismo dato, así que no pueden contradecirse: la
+lista de cada landing se deriva del mismo cuadro.
 
 ## Cómo se construye
 

@@ -83,39 +83,40 @@ section{position:relative}
 :focus-visible{outline:3px solid var(--amar);outline-offset:3px}
 
 /* ---- LA CURVA: media elipse en el borde del panel ---- */
-.lente{position:relative;display:grid;grid-template-columns:1fr 1fr;
-  align-items:stretch;min-height:clamp(420px,56vw,620px)}
-.lente__foto{position:relative;overflow:hidden;background:var(--navy)}
-/* Cuando la pagina es de producto y no de persona, la cara izquierda
-   es grafica: el numero del plan en Gotham, sobre el azul de marca. */
-.lente__foto--num{display:grid;place-items:center;background:
-  radial-gradient(118% 88% at 28% 18%,#1B5AA0 0%,#123B6B 46%,#0D2746 100%)}
-.lente__num{display:flex;flex-direction:column;align-items:center;gap:12px;
+.lente{position:relative;display:flex;align-items:stretch;overflow:hidden;
+  min-height:clamp(430px,56vw,640px)}
+/* El fondo va a sangre DEBAJO del panel: detras del arco se ve la foto o el
+   color, nunca el blanco de la pagina. Era el hueco que marco el cliente. */
+.lente__fondo{position:absolute;inset:0;z-index:0;background:var(--navy)}
+.lente__fondo img{width:100%;height:100%;object-fit:cover;display:block}
+/* Cuando la pagina es de producto y no de persona, la cara es grafica. En
+   verde de marca, para no apilar dos azules contra el panel. */
+.lente__fondo--verde{background:
+  radial-gradient(122% 94% at 24% 14%,#2E7D4F 0%,#1F5C38 46%,#10301D 100%)}
+.lente__num{position:absolute;inset:0;width:46%;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:12px;
   color:#fff;padding:40px 20px;text-align:center}
 .lente__num i{font-style:normal;font-size:12px;font-weight:700;
-  letter-spacing:.22em;text-transform:uppercase;color:#9FB4CE}
-.lente__num span{font-size:clamp(78px,12vw,164px);font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:#BFD9C8}
+.lente__num span{font-size:clamp(78px,11vw,158px);font-weight:700;
   line-height:.88;letter-spacing:-.045em}
 .lente__num .filete{margin-top:6px}
-.lente__foto img{width:100%;height:100%;object-fit:cover;display:block}
-.lente__panel{position:relative;background:
-  linear-gradient(140deg,#144580 0%,#163F72 48%,var(--navy) 100%);
+.lente__panel{position:relative;z-index:2;margin-left:auto;width:62%;
+  background:linear-gradient(140deg,#144580 0%,#163F72 48%,var(--navy) 100%);
   color:#fff;display:flex;flex-direction:column;justify-content:center;
   gap:22px;padding:clamp(34px,4.4vw,64px) clamp(26px,4vw,64px);
-  margin-left:-10%;
-  /* La curva de las laminas es un arco suave que recorre todo el alto,
-     no un circulo: un radio horizontal mas chico la aplana. */
-  border-top-left-radius:30% 50%;border-bottom-left-radius:30% 50%;
-  padding-left:clamp(60px,12vw,170px)}
+  border-top-left-radius:34% 50%;border-bottom-left-radius:34% 50%;
+  padding-left:clamp(56px,9vw,140px)}
 .lente__panel > *{position:relative;z-index:1}
 
 /* ---- franja de datos ---- */
-.datos{background:var(--navy);color:#fff}
+/* Verde, no navy: separa del azul del encabezado en vez de apilar tonos. */
+.datos{background:var(--verde);color:#fff}
 .datos ul{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
-  background:var(--lineao)}
-.datos li{background:var(--navy);padding:26px 22px}
+  background:rgba(255,255,255,.16)}
+.datos li{background:var(--verde);padding:26px 22px}
 .datos b{display:block;font-size:19px;font-weight:700;margin-bottom:5px}
-.datos span{font-size:14px;line-height:1.4;color:#AEB8CC;font-weight:300}
+.datos span{font-size:14px;line-height:1.4;color:#C6DCCE;font-weight:300}
 
 /* ---- tarjetas ---- */
 .cards{display:grid;gap:14px}
@@ -170,6 +171,22 @@ section{position:relative}
 .comp-hint{display:none;font-size:12.5px;color:var(--suave2);
   font-weight:300;margin-top:10px}
 
+/* ---- lo que incluye cada plan (reemplaza al comparador en las landings) ---- */
+.incluye{display:grid;grid-template-columns:repeat(2,1fr);gap:0 clamp(24px,3vw,44px)}
+.incluye li{display:flex;gap:11px;align-items:flex-start;padding:11px 0;
+  border-bottom:1px solid var(--linea);font-size:15.5px;line-height:1.4}
+.incluye li .ic{width:19px;height:19px;color:var(--verdecl);margin-top:2px}
+.incluye em{font-style:normal;display:block;font-size:13px;color:var(--suave);
+  font-weight:300;margin-top:3px}
+
+/* ---- Vivi mas: tarjetas con icono, no fichas sueltas ---- */
+.vivi{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+.vivi article{border:1px solid var(--linea);border-radius:12px;
+  padding:22px 20px;background:#fff}
+.vivi .ic{color:var(--verde);margin-bottom:11px}
+.vivi h3{font-size:16px;margin-bottom:7px;color:var(--verde);line-height:1.3}
+.vivi p{font-size:14.5px;line-height:1.45;color:var(--suave);font-weight:300}
+
 /* ---- formulario de Bitrix ---- */
 .form{background:#fff;border:1px solid var(--linea);border-radius:14px;
   padding:clamp(22px,3vw,34px);box-shadow:0 18px 48px -28px rgba(20,40,80,.4)}
@@ -218,6 +235,8 @@ section{position:relative}
 .head nav a{font-size:14px;font-weight:500;color:var(--tinta);
   text-decoration:none}
 .head nav a:hover{color:var(--azul)}
+.head nav a.act{color:var(--verde);font-weight:700;
+  box-shadow:inset 0 -2px 0 var(--verde)}
 .head .btn{padding:12px 20px;font-size:12.5px}
 
 /* ---- pie ---- */
@@ -256,20 +275,24 @@ html:not(.js) .rv{opacity:1;transform:none}
 /* ---- responsive ---- */
 @media (max-width:1000px){
   .datos ul{grid-template-columns:repeat(2,1fr)}
+  .vivi{grid-template-columns:repeat(2,1fr)}
   .comp{font-size:14px}
   .comp th,.comp td{padding:11px 9px}
   .comp tbody th{width:34%}
 }
 @media (max-width:860px){
-  .lente{grid-template-columns:1fr;min-height:0}
-  .lente__foto{height:clamp(240px,46vw,360px)}
-  .lente__panel{margin-left:0;margin-top:-13%;padding-left:clamp(26px,6vw,44px);
-    padding-top:clamp(56px,13vw,86px);
-    border-radius:50% 50% 0 0 / 13% 13% 0 0}
+  .lente{flex-direction:column;min-height:0}
+  .lente__fondo{position:relative;inset:auto;height:clamp(240px,46vw,350px)}
+  .lente__num{width:100%}
+  .lente__panel{width:100%;margin-left:0;margin-top:-11%;
+    padding-left:clamp(26px,6vw,44px);padding-top:clamp(56px,13vw,86px);
+    border-radius:50% 50% 0 0 / 11% 11% 0 0}
   .head nav{display:none}
+  .incluye{grid-template-columns:1fr}
 }
 @media (max-width:620px){
   :root{--gut:20px}
+  .vivi{grid-template-columns:1fr}
   .comp-hint{display:block}
   .comp thead th.p{font-size:13px}
   .comp td{font-size:12.5px;padding:10px 5px}
@@ -335,20 +358,20 @@ html:not(.js) .rv{opacity:1;transform:none}
     <a class="head__logo" href="index.html" aria-label="OSDEPYM, inicio">
       <img src="../assets/osdepym-color.png" alt="OSDEPYM" width="158" height="38">
     </a>
-    <nav aria-label="Secciones"><a href="planes.html#comparador">Comparar planes</a><a href="#dimensiones">Más que cobertura</a><a href="#dual">DUAL</a></nav>
+    <nav aria-label="Secciones"><a href="plan-1000.html">Plan 1000</a><a href="plan-2500.html">Plan 2500</a><a href="plan-4000.html" class="act" aria-current="page">Plan 4000</a><a href="#dual">DUAL</a></nav>
     <a class="btn btn-p" href="#formulario">Quiero asesorarme</a>
   </div>
 </header>
 <main>
   <div class="lente">
-  <div class="lente__foto lente__foto--num"><div class="lente__num"><i>Plan OSDEPYM</i><span>4000</span><div class="filete" aria-hidden="true"><i></i><i></i><i></i></div></div></div>
+  <div class="lente__fondo lente__fondo--verde"><div class="lente__num"><i>Plan OSDEPYM</i><span>4000</span><div class="filete" aria-hidden="true"><i></i><i></i><i></i></div></div></div>
   <div class="lente__panel"><p class="eyebrow sobre-oscuro">Plan 4000 · Quien quiere la cobertura completa</p>
 <h1 class="t-xl">La cobertura completa.</h1>
 <p class="lead sobre-oscuro">Una cobertura integral que combina tecnología, comodidad y beneficios adicionales que te cuidan en cada aspecto de tu vida.</p>
 <p class="oferta">30% de descuento durante los primeros 6 meses <small>Para personas de hasta 50 años.</small></p>
 <div class="hero__cta">
   <a class="btn btn-p" href="#formulario">Quiero asesorarme</a>
-  <a class="btn btn-o" href="#comparador">Comparar con los otros planes</a>
+  <a class="btn btn-o" href="#incluye">Ver todo lo que incluye</a>
 </div></div>
 </div>
   <section class="sec">
@@ -361,22 +384,17 @@ html:not(.js) .rv{opacity:1;transform:none}
     </div>
   </section>
   <section class="datos" aria-label="OSDEPYM en datos"><div class="wrap"><ul><li><b>Más de 55 años</b><span>acompañando a trabajadores independientes</span></li><li><b>Centros médicos propios</b><span>en AMBA, con atención en instalaciones propias</span></li><li><b>Marca federal</b><span>presente en distintos lugares y realidades del país</span></li><li><b>Hablás con personas</b><span>sucursales físicas y profesionales expertos</span></li></ul></div></section>
-  <section class="sec sec--linea">
+  <section class="sec sec--linea" id="incluye">
   <div class="wrap">
     <div class="sec__head">
-      <p class="eyebrow">Lo que pagás y lo que recibís</p>
-      <h2 class="t-lg">Los tres planes, uno al lado del otro</h2>
-      <p class="lead">Sin letra chica y sin costos ocultos. Si algo no está
-        incluido, acá también lo vas a ver.</p>
+      <p class="eyebrow">En detalle</p>
+      <h2 class="t-lg">Todo lo que incluye el Plan 4000</h2>
+      <p class="lead">Sin letra chica. Lo que ves acá es lo que está
+        comprendido en el plan.</p>
     </div>
-    <div class="comp-wrap"><table class="comp" id="comparador">
-  <caption>Cuadro comparativo según el alcance publicado de cada plan. Los límites, los coseguros y las exclusiones se detallan en las condiciones de afiliación.</caption>
-  <colgroup><col><col><col><col class="destacado"></colgroup>
-  <thead><tr><th scope="col">Prestación</th><th class="p" scope="col">Plan 1000</th><th class="p" scope="col">Plan 2500</th><th class="p" scope="col">Plan 4000</th></tr></thead>
-  <tbody><tr><th scope="row">Atención primaria y consultas</th><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Urgencias y emergencias, 24 h</th><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Centros médicos propios en AMBA</th><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Cobertura nacional</th><td>Red básica</td><td>Red nacional</td><td>Red nacional</td></tr><tr><th scope="row">Amplia red de prestadores</th><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Internaciones programadas y de urgencia</th><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Estudios de baja, mediana y alta complejidad</th><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Odontología básica y especializada</th><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Ortodoncia y prótesis</th><td class="no"><span></span><span class="vh">No incluido</span></td><td>Aranceles preferenciales</td><td>Aranceles preferenciales</td></tr><tr><th scope="row">Óptica</th><td class="no"><span></span><span class="vh">No incluido</span></td><td>100% en armazones y cristales estándar, menores de 15</td><td>100% en armazones y cristales estándar, menores de 15</td></tr><tr><th scope="row">Medicamentos en farmacias</th><td class="no"><span></span><span class="vh">No incluido</span></td><td>50% de descuento</td><td>50% de descuento</td></tr><tr><th scope="row">Salud mental</th><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Programas preventivos</th><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Coseguros diferenciales</th><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td class="no"><span></span><span class="vh">No incluido</span></td></tr><tr><th scope="row">Consultas médicas online con Dr. OSDEPYM</th><td class="no"><span></span><span class="vh">No incluido</span></td><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">Viví más OSDEPYM</th><td class="no"><span></span><span class="vh">No incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">App OSDEPYM</th><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr><tr><th scope="row">DUAL · accidentes personales</th><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td><td><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span class="vh"> Incluido</span></td></tr></tbody>
-</table></div>
-    <p class="comp-hint">Deslizá el cuadro para ver los tres planes.</p>
-    
+    <ul class="incluye"><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Atención primaria y consultas</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Urgencias y emergencias, 24 h</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Centros médicos propios en AMBA</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Cobertura nacional<em>Red nacional</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Amplia red de prestadores</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Internaciones programadas y de urgencia</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Estudios de baja, mediana y alta complejidad</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Odontología básica y especializada</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Ortodoncia y prótesis<em>Aranceles preferenciales</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Óptica<em>100% en armazones y cristales estándar, menores de 15</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Medicamentos en farmacias<em>50% de descuento</em></span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Salud mental</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Programas preventivos</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Consultas médicas online con Dr. OSDEPYM</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Viví más OSDEPYM</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>App OSDEPYM</span></li><li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12.5l5 5 10-11"/></svg><span>DUAL · accidentes personales</span></li></ul>
+    <p class="legalito">Los límites, los coseguros y las exclusiones de cada
+      prestación se detallan en las condiciones de afiliación.</p>
   </div>
 </section>
   <section class="sec">
@@ -390,15 +408,13 @@ html:not(.js) .rv{opacity:1;transform:none}
   </div>
 </section>
   <section class="sec sec--crema">
-  <div class="wrap g2">
-    <div class="vivi__txt">
-      <div class="sec__head">
-        <p class="eyebrow">Dimensión social</p>
-        <h2 class="t-lg">Viví más OSDEPYM</h2>
-      </div>
-      <p class="lead">Con los planes 2500 y 4000 accedés a descuentos y promociones exclusivas en múltiples rubros.</p>
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="eyebrow">Dimensión social</p>
+      <h2 class="t-lg">Viví más OSDEPYM</h2>
+      <p class="lead">Con los planes 2500 y 4000 accedés no solo a una cobertura médica completa, sino también a una amplia gama de descuentos y promociones exclusivas en múltiples rubros.</p>
     </div>
-    <ul class="rubros"><li>Compras y gastronomía</li><li>Indumentaria</li><li>Gimnasios y deportes</li><li>Belleza y salud</li><li>Servicios</li><li>Motos y autos</li><li>Cines</li><li>Turismo</li><li>Educación y cursos</li></ul>
+    <div class="vivi"><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.2l2.3 10.4h9.6L19 7.4H6.1M9.5 19a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4zM16.5 19a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/></svg><h3>Compras y gastronomía</h3><p>Ahorrá en tus compras diarias y disfrutá de promociones en tus restaurantes preferidos.</p></article><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3.5L5 5.5l1.4 4L8 9v11.5h8V9l1.6.5L19 5.5l-4-2a3 3 0 0 1-6 0z"/></svg><h3>Indumentaria</h3><p>Descuentos en moda, ropa y accesorios de tus marcas favoritas.</p></article><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6M7 7v10M17 7v10M20 9v6M7 12h10"/></svg><h3>Gimnasios y deportes</h3><p>Precios especiales en gimnasios, centros deportivos y actividades fitness.</p></article><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2zM12 9.4C12 6.4 10.4 4 8.4 4S5.5 6.1 6.8 8.3M12 14.6c0 3 1.6 5.4 3.6 5.4s2.9-2.1 1.6-4.3M9.4 10.7C6.8 9.2 4 9.4 3 11.2s.5 3.7 3 3.4M14.6 13.3c2.6 1.5 5.4 1.3 6.4-.5s-.5-3.7-3-3.4"/></svg><h3>Belleza y salud</h3><p>Beneficios exclusivos en tratamientos de belleza, peluquerías y centros de estética.</p></article><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 3a6.5 6.5 0 0 1 2.6 12.4L15 17.5l-2 2-2.5-.5-.5 2.5-3-3 7.1-7.1A6.5 6.5 0 0 1 14.5 3zM16.6 7.4h.01"/></svg><h3>Servicios</h3><p>Promociones en distintos servicios del hogar y personales.</p></article><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5v2.5h2.6v-2.5M16.9 16.5V19h2.6v-2.5M3.5 16.5h17v-4l-1.7-4.3a2 2 0 0 0-1.9-1.2H7.1a2 2 0 0 0-1.9 1.2L3.5 12.5zM3.5 12.5h17M7 14.4h.01M17 14.4h.01"/></svg><h3>Motos y autos</h3><p>Descuentos en mantenimiento, accesorios y seguros para tu vehículo.</p></article><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5h18v13H3zM3 7.5l3.5-4M9.5 7.5L13 3.5M16 7.5L19.5 3.5M10 11.5l5 2.5-5 2.5z"/></svg><h3>Cines</h3><p>Entradas a precios promocionales en salas seleccionadas.</p></article><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 8h15v12h-15zM9 8V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V8M9.5 12v4M14.5 12v4"/></svg><h3>Turismo</h3><p>Precios especiales en hoteles, agencias y paquetes turísticos.</p></article><article class="rv"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4l9 4.2-9 4.2-9-4.2zM6.5 10.5v5c0 1.4 2.5 2.6 5.5 2.6s5.5-1.2 5.5-2.6v-5M21 8.2v5"/></svg><h3>Educación y cursos</h3><p>Beneficios en instituciones educativas y plataformas de formación para seguir desarrollando nuevas habilidades.</p></article></div>
   </div>
 </section>
   <section class="sec dual-sec sec--linea" id="dual">

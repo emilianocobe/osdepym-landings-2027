@@ -227,12 +227,34 @@ APP = {
 
 VIVI = {
     "titulo": "Viví más OSDEPYM",
-    "bajada": ("Con los planes 2500 y 4000 accedés a descuentos y "
-               "promociones exclusivas en múltiples rubros."),
+    "bajada": ("Con los planes 2500 y 4000 accedés no solo a una cobertura "
+               "médica completa, sino también a una amplia gama de descuentos "
+               "y promociones exclusivas en múltiples rubros."),
+    # Los nueve rubros con sus textos del sitio actual. El icono es del
+    # mismo sistema de trazo que el resto: caja 24, grosor 1,7.
     "rubros": [
-        "Compras y gastronomía", "Indumentaria", "Gimnasios y deportes",
-        "Belleza y salud", "Servicios", "Motos y autos", "Cines",
-        "Turismo", "Educación y cursos",
+        ("carrito", "Compras y gastronomía",
+         "Ahorrá en tus compras diarias y disfrutá de promociones en tus "
+         "restaurantes preferidos."),
+        ("remera", "Indumentaria",
+         "Descuentos en moda, ropa y accesorios de tus marcas favoritas."),
+        ("pesa", "Gimnasios y deportes",
+         "Precios especiales en gimnasios, centros deportivos y actividades "
+         "fitness."),
+        ("flor", "Belleza y salud",
+         "Beneficios exclusivos en tratamientos de belleza, peluquerías y "
+         "centros de estética."),
+        ("llave", "Servicios",
+         "Promociones en distintos servicios del hogar y personales."),
+        ("auto", "Motos y autos",
+         "Descuentos en mantenimiento, accesorios y seguros para tu vehículo."),
+        ("cine", "Cines",
+         "Entradas a precios promocionales en salas seleccionadas."),
+        ("valija", "Turismo",
+         "Precios especiales en hoteles, agencias y paquetes turísticos."),
+        ("birrete", "Educación y cursos",
+         "Beneficios en instituciones educativas y plataformas de formación "
+         "para seguir desarrollando nuevas habilidades."),
     ],
 }
 
