@@ -95,6 +95,9 @@ DIMENSIONES = [
 # Los id de Bitrix24 son los del export: cada página tiene el suyo y es así
 # como Comercial atribuye la fuente. Son variables de página, no del sistema.
 
+# El formulario de Bitrix24 se identifica con el numero del loader MAS un
+# hash: sin el hash el script carga pero no se engancha al contenedor.
+# Los tres salen del export del 26/11/2026.
 PORTAL_BITRIX = "b31865227"
 
 PLANES = [
@@ -107,7 +110,7 @@ PLANES = [
                    "esencial, el Plan 1000 es para vos: servicios médicos "
                    "esenciales con copagos accesibles."),
         "oferta": None,
-        "form": "24",
+        "form": "24/prqjij",
         "foto": None,
         "numero": "1000",
         "alt": "Plan 1000",
@@ -132,7 +135,7 @@ PLANES = [
                    "nacional de prestadores."),
         "oferta": "30% de descuento durante los primeros 6 meses",
         "oferta_cond": "Para personas de hasta 50 años.",
-        "form": "26",
+        "form": "26/jf3a3u",
         "foto": None,
         "numero": "2500",
         "alt": "Plan 2500",
@@ -157,7 +160,7 @@ PLANES = [
                    "cada aspecto de tu vida."),
         "oferta": "30% de descuento durante los primeros 6 meses",
         "oferta_cond": "Para personas de hasta 50 años.",
-        "form": "28",
+        "form": "28/o14tpu",
         "foto": None,
         "numero": "4000",
         "alt": "Plan 4000",

@@ -54,12 +54,15 @@ Donde una fuente no dice algo, acá no figura.
 
 Son los **de producción**, uno por página, como en el sitio actual:
 
-| Página | Formulario |
-|---|---|
-| Plan 1000 | `loader_24` |
-| Plan 2500 | `loader_26` |
-| Plan 4000 | `loader_28` |
-| Home (provisorio) | `loader_26` |
+| Página | Loader | Referencia |
+|---|---|---|
+| Plan 1000 | `loader_24` | `inline/24/prqjij` |
+| Plan 2500 | `loader_26` | `inline/26/jf3a3u` |
+| Plan 4000 | `loader_28` | `inline/28/o14tpu` |
+| Home (provisorio) | `loader_26` | `inline/26/jf3a3u` |
+
+La referencia importa: el loader por sí solo carga el script pero no engancha
+el formulario al contenedor. El número sin el hash no alcanza.
 
 Todos en el portal `b31865227`. **Lo que se envíe desde este prototipo entra
 en Bitrix24 como un lead real.** La home usa provisoriamente el formulario

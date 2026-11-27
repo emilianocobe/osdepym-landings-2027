@@ -498,15 +498,17 @@ def formulario(plan, titulo=None, bajada=None):
     t = titulo or ("Consultá por el %s" % p["nombre"] if p else "Dejanos tus datos")
     b = bajada or ("Dejanos tus datos y un asesor te contacta. "
                    "Sin compromiso y sin costo.")
+    ref = p["form"] if p else "26/jf3a3u"   # <numero>/<hash>
+    num = ref.split("/")[0]
     src = ("https://cdn.bitrix24.es/%s/crm/form/loader_%s.js"
-           % (C.PORTAL_BITRIX, p["form"] if p else "26"))
+           % (C.PORTAL_BITRIX, num))
     return """<div class="form" id="formulario">
   <h3>%(t)s</h3>
   <p>%(b)s</p>
   <div class="form__caja" data-form>
     <div class="form__ph" aria-live="polite"><i aria-hidden="true"></i>
       <span>Cargando el formulario…</span></div>
-    <script data-b24-form="inline/%(id)s" data-skip-moving="true">
+    <script data-b24-form="inline/%(ref)s" data-skip-moving="true">
       (function(w,d,u){var s=d.createElement('script');s.async=true;
       s.src=u+'?'+(Date.now()/180000|0);var h=d.getElementsByTagName('script')[0];
       h.parentNode.insertBefore(s,h);})(window,document,'%(src)s');
@@ -514,7 +516,7 @@ def formulario(plan, titulo=None, bajada=None):
   </div>
   <p class="form__nota">Al enviar aceptás que OSDEPYM te contacte.
      Tus datos se tratan según la Ley 25.326 de Protección de Datos Personales.</p>
-</div>""" % {"t": t, "b": b, "id": p["form"] if p else "26", "src": src}
+</div>""" % {"t": t, "b": b, "ref": ref, "src": src}
 
 
 # ------------------------------------------------------------------- JS
