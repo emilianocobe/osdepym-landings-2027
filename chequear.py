@@ -43,6 +43,67 @@ JS = r"""
         out.chicas.push(((el.className||el.tagName)+'').slice(0,24).trim()+' '+f+'px');
     }
   }
+  /* ---- que el diseno no le tape la cara a la figura ----
+     Se calcula el encuadre real (object-fit: cover) y despues el borde
+     curvo del panel o del arco a la altura de la figura, resolviendo la
+     elipse del border-radius. Es medicion, no inspeccion visual. */
+  function borde(el, lado, y){
+    var q = el.getBoundingClientRect(), cs = getComputedStyle(el);
+    var rad = (lado === 'left' ? cs.borderTopLeftRadius : cs.borderTopRightRadius);
+    var pr = rad.split(' '), rx = pr[0], ry = pr[1] || pr[0];
+    var RX = rx.indexOf('%') >= 0 ? parseFloat(rx)/100*q.width : parseFloat(rx);
+    var RY = ry.indexOf('%') >= 0 ? parseFloat(ry)/100*q.height : parseFloat(ry);
+    if (!(RY > 0)) return lado === 'left' ? q.left : q.right;
+    var dy = Math.abs(y - (q.top + q.height/2));
+    var k = Math.min(1, dy / RY);
+    var mete = RX * (1 - Math.sqrt(1 - k*k));
+    return lado === 'left' ? q.left + mete : q.right - mete;
+  }
+  out.tapadas = [];
+  [].forEach.call(document.querySelectorAll('img[data-sujeto]'), function(img){
+    var d = img.getAttribute('data-sujeto').split(',');
+    var a = parseFloat(d[0]), b = parseFloat(d[1]);
+    var nw = parseFloat(d[2]), nh = parseFloat(d[3]);
+    var r = img.getBoundingClientRect();
+    if (!(nw > 0 && r.width > 0)) return;
+    var esc = Math.max(r.width/nw, r.height/nh);
+    var rw = nw*esc;
+    var op = getComputedStyle(img).objectPosition.split(' ')[0];
+    var px = op.indexOf('%') >= 0 ? parseFloat(op)/100 : 0.5;
+    var offX = (r.width - rw) * px;
+    var x0 = r.left + offX + a*rw, x1 = r.left + offX + b*rw;
+    var ancho = x1 - x0;
+    var panel = document.querySelector('.lente__panel');
+    var arco = document.querySelector('.apertura__arco');
+    var tapa = 0, quien = '';
+    var alturas = [r.top + r.height*0.30, r.top + r.height*0.5,
+                   r.top + r.height*0.70];
+    // En telefono el panel se apila DEBAJO de la foto: ahi lo que puede
+    // tapar es el borde curvo de arriba, no el costado. Se mide distinto.
+    if (panel && img.closest('.lente') &&
+        panel.getBoundingClientRect().top > r.top + r.height*0.6) {
+      var sup = panel.getBoundingClientRect().top;
+      var cubre = Math.max(0, r.bottom - sup);
+      if (cubre / r.height > 0.25)
+        out.tapadas.push(img.getAttribute('src').split('/').pop() +
+          ': el panel apilado tapa ' + Math.round(cubre/r.height*100) +
+          '% del alto de la foto');
+      return;
+    }
+    if (panel && img.closest('.lente')) {
+      var e = Math.min.apply(null, alturas.map(function(y){
+        return borde(panel, 'left', y); }));
+      tapa = Math.max(0, x1 - e); quien = 'el panel';
+    } else if (arco) {
+      var e2 = Math.max.apply(null, alturas.map(function(y){
+        return borde(arco, 'right', y); }));
+      tapa = Math.max(0, e2 - x0); quien = 'el arco';
+    }
+    if (ancho > 0 && tapa / ancho > 0.18)
+      out.tapadas.push(img.getAttribute('src').split('/').pop() + ': ' + quien +
+        ' tapa ' + Math.round(tapa/ancho*100) + '% de la figura');
+  });
+
   out.h1 = document.querySelectorAll('h1').length;
   out.sinalt = 0;
   var im = document.querySelectorAll('img');
@@ -107,6 +168,8 @@ def main():
                 pro.append("H1 = %d" % m["h1"])
             if m["sinalt"]:
                 pro.append("%d img sin alt" % m["sinalt"])
+            for t in m.get("tapadas", []):
+                pro.append("FIGURA TAPADA " + t)
             fallas += len(pro)
             print("%-20s %-5s  %s" % (rel, et, "OK" if not pro else "; ".join(pro)))
     print("\n%s" % ("Todo limpio." if not fallas else "%d problema(s)." % fallas))

@@ -18,6 +18,8 @@ Los dos caminos comparten TODO esto. Lo que cambia entre A y B es la capa
 de arriba: color de fondo, orden de las secciones y presupuesto de motion.
 """
 
+import os
+
 import contenido as C
 
 # ------------------------------------------------------------------ paleta
@@ -161,10 +163,13 @@ section{position:relative}
 
 /* ---- LA CURVA: media elipse en el borde del panel ---- */
 .lente{position:relative;display:flex;align-items:stretch;overflow:hidden;
-  min-height:clamp(430px,56vw,640px)}
-/* El fondo va a sangre DEBAJO del panel: detras del arco se ve la foto o el
-   color, nunca el blanco de la pagina. Era el hueco que marco el cliente. */
-.lente__fondo{position:absolute;inset:0;z-index:0;background:var(--navy)}
+  min-height:clamp(430px,56vw,640px);background:var(--navy)}
+/* La foto ocupa una columna del 62%% y el panel entra desde el 38%%: la union
+   de las dos cubre todo el ancho, asi que no puede quedar un hueco blanco, y
+   la figura cae en la parte que el panel no alcanza. Si la foto fuera a
+   sangre, la protagonista quedaria justo detras del azul. */
+.lente__fondo{position:absolute;inset:0 auto 0 0;width:62%%;z-index:0;
+  background:var(--navy)}
 .lente__fondo img{width:100%%;height:100%%;object-fit:cover;display:block}
 /* Cuando la pagina es de producto y no de persona, la cara es grafica. En
    verde de marca, para no apilar dos azules contra el panel. */
@@ -460,7 +465,8 @@ html:not(.js) .rv{opacity:1;transform:none}
   .fija{grid-template-columns:1fr}
   .fija__col{position:static}
   .lente{flex-direction:column;min-height:0}
-  .lente__fondo{position:relative;inset:auto;height:clamp(240px,46vw,350px)}
+  .lente__fondo{position:relative;inset:auto;width:100%%;
+    height:clamp(240px,46vw,350px)}
   .lente__num{width:100%%}
   .lente__panel{width:100%%;margin-left:0;margin-top:-11%%;
     padding-left:clamp(26px,6vw,44px);padding-top:clamp(56px,13vw,86px);
@@ -539,12 +545,34 @@ def aviso_proto():
             'Bitrix24 como un lead real.</div>')
 
 
+_MEDIDAS = {}
+
+
+def _suj(foto):
+    """La franja de la figura y el tamano real del archivo, para que el
+    chequeo pueda calcular el encuadre sin depender de que la imagen haya
+    terminado de cargar."""
+    a, b = C.SUJETO.get(foto, (0.0, 1.0))
+    if foto not in _MEDIDAS:
+        try:
+            from PIL import Image
+            ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                "assets", "img", foto)
+            with Image.open(ruta) as im:
+                _MEDIDAS[foto] = im.size
+        except Exception:
+            _MEDIDAS[foto] = (0, 0)
+    w, h = _MEDIDAS[foto]
+    return "%s,%s,%d,%d" % (a, b, w, h)
+
+
 def lente(foto, alt, foco, contenido_panel, ruta="assets/", numero=None):
     """El gesto de marca: cara izquierda (foto o numero) y panel con el arco."""
     if foto:
         izq = ('<div class="lente__fondo"><img src="%simg/%s" alt="%s" '
-               'style="object-position:%s" width="1800" height="1200" '
-               'fetchpriority="high"></div>' % (ruta, foto, alt, foco))
+               'style="object-position:%s" data-sujeto="%s" width="1800" '
+               'height="1200" fetchpriority="high"></div>'
+               % (ruta, foto, alt, foco, _suj(foto)))
     else:
         izq = ('<div class="lente__fondo lente__fondo--verde">'
                '<div class="lente__num"><i>Plan OSDEPYM</i><span>%s</span>'
@@ -678,17 +706,21 @@ def bloque_dual_cards():
     return "".join(out)
 
 
-def formulario(plan, titulo=None, bajada=None):
-    """El formulario real de Bitrix24. El id sale del export: uno por página."""
+def formulario(plan, titulo=None, bajada=None, ident="formulario"):
+    """El formulario real de Bitrix24.
+
+    Va DOS VECES por landing, el mismo: una apenas pasa el encabezado y
+    otra antes del pie, para que nadie tenga que volver a buscarlo. El
+    `ref` lleva numero y hash; el numero solo no engancha el formulario."""
     p = C.PLAN_POR_CLAVE[plan] if plan else None
     t = titulo or ("Consultá por el %s" % p["nombre"] if p else "Dejanos tus datos")
     b = bajada or ("Dejanos tus datos y un asesor te contacta. "
                    "Sin compromiso y sin costo.")
-    ref = p["form"] if p else "26/jf3a3u"   # <numero>/<hash>
+    ref = C.ref_form(plan) if plan else C.ref_form("2500")
     num = ref.split("/")[0]
     src = ("https://cdn.bitrix24.es/%s/crm/form/loader_%s.js"
            % (C.PORTAL_BITRIX, num))
-    return """<div class="form" id="formulario">
+    return """<div class="form" id="%(ident)s">
   <h3>%(t)s</h3>
   <p>%(b)s</p>
   <div class="form__caja" data-form>
@@ -702,7 +734,7 @@ def formulario(plan, titulo=None, bajada=None):
   </div>
   <p class="form__nota">Al enviar aceptás que OSDEPYM te contacte.
      Tus datos se tratan según la Ley 25.326 de Protección de Datos Personales.</p>
-</div>""" % {"t": t, "b": b, "ref": ref, "src": src}
+</div>""" % {"t": t, "b": b, "ref": ref, "src": src, "ident": ident}
 
 
 # ------------------------------------------------------------------- JS
@@ -766,12 +798,14 @@ document.documentElement.classList.add('js');
      retira cuando el formulario ya esta a la vista */
   var barra = document.querySelector('.ctafija');
   if (barra) {
-    var form = document.getElementById('formulario');
-    var verForm = false;
-    if (form && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function(es){
-        verForm = es[0].isIntersecting; mover();
-      }, {threshold:0}).observe(form);
+    var forms = document.querySelectorAll('.form');
+    var vistos = 0, verForm = false;
+    if (forms.length && 'IntersectionObserver' in window) {
+      var io2 = new IntersectionObserver(function(es){
+        es.forEach(function(e){ vistos += e.isIntersecting ? 1 : -1; });
+        verForm = vistos > 0; mover();
+      }, {threshold:0});
+      forms.forEach(function(f){ io2.observe(f); });
     }
     var mover = function(){
       barra.classList.toggle('on', window.scrollY > 460 && !verForm);

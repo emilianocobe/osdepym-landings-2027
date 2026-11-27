@@ -84,10 +84,13 @@ section{position:relative}
 
 /* ---- LA CURVA: media elipse en el borde del panel ---- */
 .lente{position:relative;display:flex;align-items:stretch;overflow:hidden;
-  min-height:clamp(430px,56vw,640px)}
-/* El fondo va a sangre DEBAJO del panel: detras del arco se ve la foto o el
-   color, nunca el blanco de la pagina. Era el hueco que marco el cliente. */
-.lente__fondo{position:absolute;inset:0;z-index:0;background:var(--navy)}
+  min-height:clamp(430px,56vw,640px);background:var(--navy)}
+/* La foto ocupa una columna del 62% y el panel entra desde el 38%: la union
+   de las dos cubre todo el ancho, asi que no puede quedar un hueco blanco, y
+   la figura cae en la parte que el panel no alcanza. Si la foto fuera a
+   sangre, la protagonista quedaria justo detras del azul. */
+.lente__fondo{position:absolute;inset:0 auto 0 0;width:62%;z-index:0;
+  background:var(--navy)}
 .lente__fondo img{width:100%;height:100%;object-fit:cover;display:block}
 /* Cuando la pagina es de producto y no de persona, la cara es grafica. En
    verde de marca, para no apilar dos azules contra el panel. */
@@ -383,7 +386,8 @@ html:not(.js) .rv{opacity:1;transform:none}
   .fija{grid-template-columns:1fr}
   .fija__col{position:static}
   .lente{flex-direction:column;min-height:0}
-  .lente__fondo{position:relative;inset:auto;height:clamp(240px,46vw,350px)}
+  .lente__fondo{position:relative;inset:auto;width:100%;
+    height:clamp(240px,46vw,350px)}
   .lente__num{width:100%}
   .lente__panel{width:100%;margin-left:0;margin-top:-11%;
     padding-left:clamp(26px,6vw,44px);padding-top:clamp(56px,13vw,86px);
@@ -441,6 +445,9 @@ html:not(.js) .rv{opacity:1;transform:none}
   margin-top:16px;max-width:94ch}
 .vivi__txt p{margin-bottom:18px}
 .form-sec{background:linear-gradient(180deg,var(--azulp) 0%,#fff 100%)}
+.sec--corta{padding:clamp(38px,4.4vw,58px) 0}
+.form-sec__c{max-width:760px}
+.sec__head--c{margin-bottom:22px;max-width:none}
 @media (max-width:1000px){
   .g4,.g5{grid-template-columns:repeat(2,1fr)}
   .g2{grid-template-columns:1fr}
@@ -518,9 +525,10 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
 .apertura__foto--num{background:radial-gradient(122% 92% at 24% 14%,
   #2E7D4F 0%,#1F5C38 46%,#10301D 100%)}
 .apertura__cta{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+/* Abajo a la derecha, no al medio: al medio le caia sobre la cara. */
 .apertura__num{position:absolute;z-index:2;right:clamp(24px,6vw,86px);
-  top:50%;transform:translateY(-50%);display:flex;flex-direction:column;
-  align-items:flex-end;gap:8px;color:#fff;text-align:right}
+  bottom:clamp(26px,6vh,64px);display:flex;flex-direction:column;
+  align-items:flex-end;gap:6px;color:#fff;text-align:right}
 .apertura__num i{font-style:normal;font-size:12px;font-weight:700;
   letter-spacing:.22em;text-transform:uppercase;color:#BFD9C8}
 .apertura__num span{font-size:clamp(68px,9.5vw,146px);font-weight:700;
@@ -545,7 +553,7 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
 </header>
 <main>
   <section class="apertura">
-  <div class="apertura__foto"><img src="../assets/img/plan-1000.jpg" alt="El dueño de un local, en la puerta de su negocio" width="1800" height="1200" fetchpriority="high"></div>
+  <div class="apertura__foto"><img src="../assets/img/plan-1000-b.jpg" alt="El dueño de un local, en la puerta de su negocio" data-sujeto="0.52,0.9,1410,2000" width="1800" height="1200" fetchpriority="high"></div>
   <div class="apertura__velo" aria-hidden="true"></div>
   <div class="apertura__arco" aria-hidden="true"></div>
   <div class="apertura__num" aria-hidden="true"><i>Plan OSDEPYM</i><span>1000</span></div>
@@ -561,6 +569,31 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
   </div>
 </section>
   <div class="marq" aria-hidden="true"><div class="marq__in"><span>Atención primaria y consultas</span><span>Urgencias y emergencias, 24 h</span><span>Centros médicos propios en AMBA</span><span>Cobertura nacional</span><span>Amplia red de prestadores</span><span>Internaciones programadas y de urgencia</span><span>Estudios de baja, mediana y alta complejidad</span><span>Odontología básica y especializada</span><span>Ortodoncia y prótesis</span><span>Óptica</span><span>Medicamentos en farmacias</span><span>Salud mental</span><span>Programas preventivos</span><span>Coseguros diferenciales</span><span>Consultas médicas online con Dr. OSDEPYM</span><span>Viví más OSDEPYM</span><span>App OSDEPYM</span><span>DUAL · accidentes personales</span><span>Atención primaria y consultas</span><span>Urgencias y emergencias, 24 h</span><span>Centros médicos propios en AMBA</span><span>Cobertura nacional</span><span>Amplia red de prestadores</span><span>Internaciones programadas y de urgencia</span><span>Estudios de baja, mediana y alta complejidad</span><span>Odontología básica y especializada</span><span>Ortodoncia y prótesis</span><span>Óptica</span><span>Medicamentos en farmacias</span><span>Salud mental</span><span>Programas preventivos</span><span>Coseguros diferenciales</span><span>Consultas médicas online con Dr. OSDEPYM</span><span>Viví más OSDEPYM</span><span>App OSDEPYM</span><span>DUAL · accidentes personales</span></div></div>
+  <section class="sec sec--corta form-sec">
+  <div class="wrap form-sec__c">
+    <div class="sec__head sec__head--c">
+      <p class="eyebrow">Dejanos tus datos</p>
+      <h2 class="t-md">¿Querés que te llamemos?</h2>
+      <p class="lead">Un asesor te contacta y te explica qué cubre el plan,
+        cuánto sale y cómo seguir. Sin compromiso.</p>
+    </div>
+    <div class="form" id="formulario">
+  <h3>Consultá por el Plan 1000</h3>
+  <p>Dejanos tus datos y un asesor te contacta. Sin compromiso y sin costo.</p>
+  <div class="form__caja" data-form>
+    <div class="form__ph" aria-live="polite"><i aria-hidden="true"></i>
+      <span>Cargando el formulario…</span></div>
+    <script data-b24-form="inline/24/prqjij" data-skip-moving="true">
+      (function(w,d,u){var s=d.createElement('script');s.async=true;
+      s.src=u+'?'+(Date.now()/180000|0);var h=d.getElementsByTagName('script')[0];
+      h.parentNode.insertBefore(s,h);})(window,document,'https://cdn.bitrix24.es/b31865227/crm/form/loader_24.js');
+    </script>
+  </div>
+  <p class="form__nota">Al enviar aceptás que OSDEPYM te contacte.
+     Tus datos se tratan según la Ley 25.326 de Protección de Datos Personales.</p>
+</div>
+  </div>
+</section>
   <section class="osc ruta" id="recorrido">
     <div class="wrap">
       <div class="ruta__head">
@@ -637,7 +670,7 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
       </div>
       <a class="btn btn-s" href="tel:08002888432"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17.5 17.5 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2z"/></svg> 0800-288-8432</a>
     </div>
-    <div class="form" id="formulario">
+    <div class="form" id="formulario-final">
   <h3>Consultá por el Plan 1000</h3>
   <p>Dejanos tus datos y un asesor te contacta. Sin compromiso y sin costo.</p>
   <div class="form__caja" data-form>
@@ -733,12 +766,14 @@ document.documentElement.classList.add('js');
      retira cuando el formulario ya esta a la vista */
   var barra = document.querySelector('.ctafija');
   if (barra) {
-    var form = document.getElementById('formulario');
-    var verForm = false;
-    if (form && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function(es){
-        verForm = es[0].isIntersecting; mover();
-      }, {threshold:0}).observe(form);
+    var forms = document.querySelectorAll('.form');
+    var vistos = 0, verForm = false;
+    if (forms.length && 'IntersectionObserver' in window) {
+      var io2 = new IntersectionObserver(function(es){
+        es.forEach(function(e){ vistos += e.isIntersecting ? 1 : -1; });
+        verForm = vistos > 0; mover();
+      }, {threshold:0});
+      forms.forEach(function(f){ io2.observe(f); });
     }
     var mover = function(){
       barra.classList.toggle('on', window.scrollY > 460 && !verForm);

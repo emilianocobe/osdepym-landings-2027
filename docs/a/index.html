@@ -84,10 +84,13 @@ section{position:relative}
 
 /* ---- LA CURVA: media elipse en el borde del panel ---- */
 .lente{position:relative;display:flex;align-items:stretch;overflow:hidden;
-  min-height:clamp(430px,56vw,640px)}
-/* El fondo va a sangre DEBAJO del panel: detras del arco se ve la foto o el
-   color, nunca el blanco de la pagina. Era el hueco que marco el cliente. */
-.lente__fondo{position:absolute;inset:0;z-index:0;background:var(--navy)}
+  min-height:clamp(430px,56vw,640px);background:var(--navy)}
+/* La foto ocupa una columna del 62% y el panel entra desde el 38%: la union
+   de las dos cubre todo el ancho, asi que no puede quedar un hueco blanco, y
+   la figura cae en la parte que el panel no alcanza. Si la foto fuera a
+   sangre, la protagonista quedaria justo detras del azul. */
+.lente__fondo{position:absolute;inset:0 auto 0 0;width:62%;z-index:0;
+  background:var(--navy)}
 .lente__fondo img{width:100%;height:100%;object-fit:cover;display:block}
 /* Cuando la pagina es de producto y no de persona, la cara es grafica. En
    verde de marca, para no apilar dos azules contra el panel. */
@@ -383,7 +386,8 @@ html:not(.js) .rv{opacity:1;transform:none}
   .fija{grid-template-columns:1fr}
   .fija__col{position:static}
   .lente{flex-direction:column;min-height:0}
-  .lente__fondo{position:relative;inset:auto;height:clamp(240px,46vw,350px)}
+  .lente__fondo{position:relative;inset:auto;width:100%;
+    height:clamp(240px,46vw,350px)}
   .lente__num{width:100%}
   .lente__panel{width:100%;margin-left:0;margin-top:-11%;
     padding-left:clamp(26px,6vw,44px);padding-top:clamp(56px,13vw,86px);
@@ -441,6 +445,9 @@ html:not(.js) .rv{opacity:1;transform:none}
   margin-top:16px;max-width:94ch}
 .vivi__txt p{margin-bottom:18px}
 .form-sec{background:linear-gradient(180deg,var(--azulp) 0%,#fff 100%)}
+.sec--corta{padding:clamp(38px,4.4vw,58px) 0}
+.form-sec__c{max-width:760px}
+.sec__head--c{margin-bottom:22px;max-width:none}
 @media (max-width:1000px){
   .g4,.g5{grid-template-columns:repeat(2,1fr)}
   .g2{grid-template-columns:1fr}
@@ -464,7 +471,7 @@ html:not(.js) .rv{opacity:1;transform:none}
 </header>
 <main>
   <div class="lente">
-  <div class="lente__fondo"><img src="../assets/img/home.jpg" alt="Una joven espera en la vereda de su barrio" style="object-position:56% center" width="1800" height="1200" fetchpriority="high"></div>
+  <div class="lente__fondo"><img src="../assets/img/home.jpg" alt="Una joven espera en la vereda de su barrio" style="object-position:56% center" data-sujeto="0.26,0.6,2400,1860" width="1800" height="1200" fetchpriority="high"></div>
   <div class="lente__panel"><p class="eyebrow sobre-oscuro">Planes OSDEPYM</p>
 <h1 class="t-xl">Una buena cobertura en salud no es un privilegio de pocos.</h1>
 <p class="lead sobre-oscuro">OSDEPYM genera las condiciones para que las personas vivan, trabajen y se desarrollen plenamente.</p>
@@ -652,12 +659,14 @@ document.documentElement.classList.add('js');
      retira cuando el formulario ya esta a la vista */
   var barra = document.querySelector('.ctafija');
   if (barra) {
-    var form = document.getElementById('formulario');
-    var verForm = false;
-    if (form && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function(es){
-        verForm = es[0].isIntersecting; mover();
-      }, {threshold:0}).observe(form);
+    var forms = document.querySelectorAll('.form');
+    var vistos = 0, verForm = false;
+    if (forms.length && 'IntersectionObserver' in window) {
+      var io2 = new IntersectionObserver(function(es){
+        es.forEach(function(e){ vistos += e.isIntersecting ? 1 : -1; });
+        verForm = vistos > 0; mover();
+      }, {threshold:0});
+      forms.forEach(function(f){ io2.observe(f); });
     }
     var mover = function(){
       barra.classList.toggle('on', window.scrollY > 460 && !verForm);

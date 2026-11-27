@@ -95,9 +95,50 @@ DIMENSIONES = [
 # Los id de Bitrix24 son los del export: cada página tiene el suyo y es así
 # como Comercial atribuye la fuente. Son variables de página, no del sistema.
 
-# El formulario de Bitrix24 se identifica con el numero del loader MAS un
-# hash: sin el hash el script carga pero no se engancha al contenedor.
-# Los tres salen del export del 26/11/2026.
+# ---------------------------------------------- formularios de Bitrix24
+# Tabla que pasó Comercial el 27/11/2026. Hay UN formulario por landing y
+# por fuente de tráfico: esa numeración ES la atribución. El `ref` lleva
+# número Y hash: sin el hash el script carga pero no se engancha.
+
+FUENTES = {
+    "mads": "Meta Ads",
+    "gads": "Google Ads",
+    "pmax": "Performance Max",
+    "tads": "TikTok Ads",
+    "org":  "Orgánico",
+}
+
+# fuente, plan -> (ref, utm, página de gracias)
+FORMULARIOS = {
+    ("mads", "1000"): ("4/55cljc",  "utm_source=meta&utm_medium=paid-media&utm_campaign=plan-1000", "mads-gracias-plan-1000"),
+    ("mads", "2500"): ("6/wekght",  "utm_source=meta&utm_medium=paid-media&utm_campaign=plan-2500", "mads-gracias-plan-2500"),
+    ("mads", "4000"): ("8/8zgk4b",  "utm_source=meta&utm_medium=paid-media&utm_campaign=plan-4000", "mads-gracias-plan-4000"),
+    ("gads", "1000"): ("10/ve5ihq", "utm_source=google&utm_medium=sem&utm_campaign=plan-1000", "gads-gracias-plan-1000"),
+    ("gads", "2500"): ("12/eixy47", "utm_source=google&utm_medium=sem&utm_campaign=plan-2500", "gads-gracias-plan-2500"),
+    ("gads", "4000"): ("14/v6mg73", "utm_source=google&utm_medium=sem&utm_campaign=plan-4000", "gads-gracias-plan-4000"),
+    ("pmax", "1000"): ("18/79rncn", "utm_source=google&utm_medium=pmax&utm_campaign=plan-1000", "pmax-gracias-plan-1000"),
+    ("pmax", "2500"): ("20/6yni0m", "utm_source=google&utm_medium=pmax&utm_campaign=plan-2500", "pmax-gracias-plan-2500"),
+    ("pmax", "4000"): ("22/z52phr", "utm_source=google&utm_medium=pmax&utm_campaign=plan-4000", "pmax-gracias-plan-4000"),
+    ("org",  "1000"): ("24/prqjij", "utm_source=org&utm_medium=org&utm_campaign=plan-1000", "org-gracias-plan-1000"),
+    ("org",  "2500"): ("26/jf3a3u", "utm_source=org&utm_medium=org&utm_campaign=plan-2500", "org-gracias-plan-2500"),
+    ("org",  "4000"): ("28/o14tpu", "utm_source=org&utm_medium=org&utm_campaign=plan-4000", "org-gracias-plan-4000"),
+    ("tads", "1000"): ("46/biuoyu", "utm_source=tiktok&utm_medium=paid-media&utm_campaign=plan-1000", "tads-gracias-plan-1000"),
+    ("tads", "2500"): ("48/brtl0e", "utm_source=tiktok&utm_medium=paid-media&utm_campaign=plan-2500", "tads-gracias-plan-2500"),
+    ("tads", "4000"): ("50/ma2ygt", "utm_source=tiktok&utm_medium=paid-media&utm_campaign=plan-4000", "tads-gracias-plan-4000"),
+}
+
+# Dos sueltos, con solo e-mail y teléfono:
+#   email remarketing  52/f4e7re   ·  QR de vía pública  106/5c34mv
+
+# Con qué fuente se arma el prototipo. Cambiando esta línea salen las
+# landings de cualquier otra fuente, con su formulario y su atribución.
+FUENTE = "org"
+
+
+def ref_form(plan, fuente=None):
+    return FORMULARIOS[(fuente or FUENTE, plan)][0]
+
+
 PORTAL_BITRIX = "b31865227"
 
 PLANES = [
@@ -110,8 +151,8 @@ PLANES = [
                    "esencial, el Plan 1000 es para vos: servicios médicos "
                    "esenciales con copagos accesibles."),
         "oferta": None,
-        "form": "24/prqjij",
         "foto": "plan-1000.jpg",
+        "foto_b": "plan-1000-b.jpg",
         "foco": "center 34%",
         "numero": "1000",
         "alt": "El dueño de un local, en la puerta de su negocio",
@@ -136,8 +177,8 @@ PLANES = [
                    "nacional de prestadores."),
         "oferta": "30% de descuento durante los primeros 6 meses",
         "oferta_cond": "Para personas de hasta 50 años.",
-        "form": "26/jf3a3u",
         "foto": "plan-2500.jpg",
+        "foto_b": "plan-2500-b.jpg",
         "foco": "center 38%",
         "numero": "2500",
         "alt": "Una familia caminando por un parque",
@@ -162,8 +203,8 @@ PLANES = [
                    "cada aspecto de tu vida."),
         "oferta": "30% de descuento durante los primeros 6 meses",
         "oferta_cond": "Para personas de hasta 50 años.",
-        "form": "28/o14tpu",
         "foto": "plan-4000.jpg",
+        "foto_b": "plan-4000-b.jpg",
         "foco": "center 32%",
         "numero": "4000",
         "alt": "Una mujer en el living de su casa",
@@ -210,6 +251,22 @@ COMPARADOR = [
 COMPARADOR_NOTA = ("Cuadro comparativo según el alcance publicado de cada plan. "
                    "Los límites, los coseguros y las exclusiones se detallan en "
                    "las condiciones de afiliación.")
+
+# ------------------------------------------------- dónde está la figura
+# Franja horizontal que ocupa la persona en cada foto, en fracciones del
+# ancho de la imagen ya recortada. No es decorativo: el chequeo lo usa
+# para verificar que ni el panel ni el arco le tapen la cara.
+SUJETO = {
+    "home.jpg":        (0.26, 0.60),
+    "plan-1000.jpg":   (0.08, 0.42),
+    "plan-2500.jpg":   (0.22, 0.62),
+    "plan-4000.jpg":   (0.26, 0.58),
+    "home-b.jpg":      (0.50, 0.88),
+    "plan-1000-b.jpg": (0.52, 0.90),
+    "plan-2500-b.jpg": (0.42, 0.88),
+    "plan-4000-b.jpg": (0.46, 0.90),
+}
+
 
 # ------------------------------------------------------------------- la app
 

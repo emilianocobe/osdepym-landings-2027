@@ -61,6 +61,9 @@ CSS_A = """
   margin-top:16px;max-width:94ch}
 .vivi__txt p{margin-bottom:18px}
 .form-sec{background:linear-gradient(180deg,var(--azulp) 0%,#fff 100%)}
+.sec--corta{padding:clamp(38px,4.4vw,58px) 0}
+.form-sec__c{max-width:760px}
+.sec__head--c{margin-bottom:22px;max-width:none}
 @media (max-width:1000px){
   .g4,.g5{grid-template-columns:repeat(2,1fr)}
   .g2{grid-template-columns:1fr}
@@ -196,7 +199,21 @@ def _seccion_comparador(destacado=None, con_links=True):
 </section>""" % {"tabla": S.comparador(destacado), "links": links}
 
 
-def _seccion_form(plan, titulo=None):
+def _seccion_form(plan, titulo=None, ident="formulario", compacto=False):
+    """Va dos veces por landing. La primera, compacta, apenas pasa el
+    encabezado: el que ya se decidio no tiene que recorrer la pagina."""
+    if compacto:
+        return """<section class="sec sec--corta form-sec">
+  <div class="wrap form-sec__c">
+    <div class="sec__head sec__head--c">
+      <p class="eyebrow">Dejanos tus datos</p>
+      <h2 class="t-md">¿Querés que te llamemos?</h2>
+      <p class="lead">Un asesor te contacta y te explica qué cubre el plan,
+        cuánto sale y cómo seguir. Sin compromiso.</p>
+    </div>
+    %(form)s
+  </div>
+</section>""" % {"form": S.formulario(plan, titulo, ident=ident)}
     return """<section class="sec form-sec">
   <div class="wrap g2">
     <div>
@@ -212,7 +229,8 @@ def _seccion_form(plan, titulo=None):
     %(form)s
   </div>
 </section>""" % {"telc": C.MARCA["telefono_crudo"], "tel": C.MARCA["telefono"],
-                 "ic": S.ico("tel"), "form": S.formulario(plan, titulo)}
+                 "ic": S.ico("tel"),
+                 "form": S.formulario(plan, titulo, ident=ident)}
 
 
 def home_a(ruta="../assets/"):
@@ -278,6 +296,7 @@ def plan_a(clave, ruta="../assets/"):
 %(head)s
 <main>
   %(hero)s
+  %(form1)s
   <section class="sec">
     <div class="wrap">
       <div class="sec__head">
@@ -307,7 +326,8 @@ def plan_a(clave, ruta="../assets/"):
         "app": _seccion_app(),
         "vivi": vivi,
         "dual": _seccion_dual(oscuro=True),
-        "form": _seccion_form(clave),
+        "form1": _seccion_form(clave, ident="formulario", compacto=True),
+        "form": _seccion_form(clave, ident="formulario-final"),
         "pie": S.pie(ruta),
         "ctafija": S.cta_fija(),
     }
@@ -389,9 +409,10 @@ html.abierto .apertura__arco{transform:translateX(0) scaleX(1)}
 .apertura__foto--num{background:radial-gradient(122% 92% at 24% 14%,
   #2E7D4F 0%,#1F5C38 46%,#10301D 100%)}
 .apertura__cta{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+/* Abajo a la derecha, no al medio: al medio le caia sobre la cara. */
 .apertura__num{position:absolute;z-index:2;right:clamp(24px,6vw,86px);
-  top:50%;transform:translateY(-50%);display:flex;flex-direction:column;
-  align-items:flex-end;gap:8px;color:#fff;text-align:right}
+  bottom:clamp(26px,6vh,64px);display:flex;flex-direction:column;
+  align-items:flex-end;gap:6px;color:#fff;text-align:right}
 .apertura__num i{font-style:normal;font-size:12px;font-weight:700;
   letter-spacing:.22em;text-transform:uppercase;color:#BFD9C8}
 .apertura__num span{font-size:clamp(68px,9.5vw,146px);font-weight:700;
@@ -456,8 +477,9 @@ def _apertura_b(foto, alt, h1, lead, ruta, numero=None, eyebrow=None,
                 cta=None):
     if foto:
         fondo = ('<div class="apertura__foto"><img src="%simg/%s" alt="%s" '
-                 'width="1800" height="1200" fetchpriority="high"></div>'
-                 % (ruta, foto, alt))
+                 'data-sujeto="%s" width="1800" height="1200" '
+                 'fetchpriority="high"></div>'
+                 % (ruta, foto, alt, S._suj(foto)))
     else:
         fondo = '<div class="apertura__foto apertura__foto--num"></div>'
     # El numero del plan tiene que estar: es lo que dice de que pagina se
@@ -535,7 +557,7 @@ def home_b(ruta="../assets/"):
 %(ctafija)s""" % {
         "proto": S.aviso_proto(),
         "head": S.cabecera(ruta, "index.html"),
-        "apertura": _apertura_b("home.jpg", "Una joven espera en la vereda de su barrio",
+        "apertura": _apertura_b("home-b.jpg", "Una joven espera en la vereda de su barrio",
                                 C.MENSAJE_1, C.PROPOSITO, ruta),
         "planes": _planes_b(), "marq": S.marquesina(),
         "dif": C.DIFERENCIAL, "pasos": _pasos_b(),
@@ -569,6 +591,7 @@ def plan_b(clave, ruta="../assets/"):
 <main>
   %(apertura)s
   %(marq)s
+  %(form1)s
   <section class="osc ruta" id="recorrido">
     <div class="wrap">
       <div class="ruta__head">
@@ -603,17 +626,18 @@ def plan_b(clave, ruta="../assets/"):
         "proto": S.aviso_proto(),
         "head": S.cabecera(ruta, "index.html", activo=clave),
         "apertura": _apertura_b(
-            p["foto"], p["alt"], p["titular"], p["bajada"], ruta,
-            p.get("numero"), "%s · %s" % (p["nombre"], p["para"]),
-            CTA_PLAN_B),
+            p.get("foto_b") or p["foto"], p["alt"], p["titular"],
+            p["bajada"], ruta, p.get("numero"),
+            "%s · %s" % (p["nombre"], p["para"]), CTA_PLAN_B),
         "nombre": p["nombre"], "oferta": oferta, "cards": cards,
         "marq": S.marquesina(),
+        "form1": _seccion_form(clave, ident="formulario", compacto=True),
         "comp": _seccion_incluye(p),
         "datos": S.franja_datos(),
         "app": _seccion_app(),
         "vivi": vivi,
         "dual": _seccion_dual(),
-        "form": _seccion_form(clave),
+        "form": _seccion_form(clave, ident="formulario-final"),
         "pie": S.pie(ruta),
         "ctafija": S.cta_fija(),
     }
