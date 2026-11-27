@@ -76,9 +76,9 @@ JS = r"""
     /* Si la imagen es mas angosta que su caja, el cover recorta ARRIBA y
        ABAJO: ahi es donde se pierden las cabezas. En el camino A nunca
        debe pasar, porque los recortes se hicieron para que no pase. */
-    if (img.closest('.lente')) {
+    if (img.closest('.lente') || img.closest('.apertura')) {
       var perdido = (nh*esc - r.height) / (nh*esc);
-      if (perdido > 0.02)
+      if (perdido > (img.closest('.lente') ? 0.02 : 0.08))
         out.tapadas.push(img.getAttribute('src').split('/').pop() +
           ': el encuadre recorta ' + Math.round(perdido*100) +
           '% del alto (riesgo de cortar la cabeza)');

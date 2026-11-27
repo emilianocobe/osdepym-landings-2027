@@ -207,7 +207,7 @@ PLANES = [
         "foto_b": "plan-4000-b.jpg",
         "foco": "0% 50%",
         "numero": "4000",
-        "alt": "Una mujer sonriendo en un parque, en otoño",
+        "alt": "Una peluquera con las tijeras en la mano, en su salón",
         "destacados": [
             ("Amplia red de prestadores",
              "Acceso a una extensa red de profesionales y centros médicos."),
@@ -260,11 +260,11 @@ SUJETO = {
     "home.jpg":        (0.40, 0.56),
     "plan-1000.jpg":   (0.36, 0.60),
     "plan-2500.jpg":   (0.15, 0.58),
-    "plan-4000.jpg":   (0.47, 0.60),
-    "home-b.jpg":      (0.55, 0.78),
-    "plan-1000-b.jpg": (0.57, 0.86),
-    "plan-2500-b.jpg": (0.65, 0.79),
-    "plan-4000-b.jpg": (0.69, 0.86),
+    "plan-4000.jpg":   (0.31, 0.57),
+    "home-b.jpg":      (0.60, 0.79),
+    "plan-1000-b.jpg": (0.60, 0.79),
+    "plan-2500-b.jpg": (0.60, 0.70),
+    "plan-4000-b.jpg": (0.60, 0.78),
 }
 
 

@@ -16,11 +16,12 @@ REGLA DE ENCUADRE, que es de donde salieron las cabezas cortadas:
   se puede cortar. La figura va en la mitad izquierda, donde el panel no
   llega, y `object-position` ancla a la izquierda.
 
-  Camino B: la apertura ocupa la pantalla, asi que la relacion del
-  contenedor varia demasiado (de 0,5 en telefono a 1,9 en escritorio) y no
-  hay un solo lado que sobre siempre. Ahi los recortes van a 1,50 con la
-  cabeza bien adentro y `object-position: 78%% 22%%`, que mantiene la cara
-  tanto cuando recorta a lo alto como cuando recorta a lo ancho.
+  Camino B: la apertura ocupa la pantalla y la relacion del contenedor va
+  de 0,5 en telefono a ~1,8 en escritorio. Los recortes salen PANORAMICOS,
+  a ~2,05, por encima de todas: asi el alto entra entero siempre —la cara
+  no se puede cortar— y lo unico que recorta es el ancho, que es lo que
+  controla `object-position: 70%% 50%%`. La figura va a la derecha, donde el
+  arco no llega.
 
 Las fracciones de abajo salieron de medir cada original sobre una grilla,
 no de estimarlas.
@@ -37,13 +38,15 @@ DESTINO = os.path.join(AQUI, "assets", "img")
 # El recorte es (izquierda, arriba, derecha, abajo) en fracciones.
 TRABAJOS = {
     "home.jpg": ((0.10, 0.00, 0.90, 0.82), "home.jpg",
-                 (0.10, 0.00, 0.68, 0.58), "home-b.jpg"),
+                 (0.00, 0.02, 0.70, 0.53), "home-b.jpg"),
     "n1000.jpg": ((0.30, 0.00, 1.00, 0.72), "plan-1000.jpg",
-                  (0.22, 0.00, 0.80, 0.58), "plan-1000-b.jpg"),
+                  (0.00, 0.00, 0.92, 0.67), "plan-1000-b.jpg"),
     "p2500.jpg": ((0.14, 0.00, 0.94, 0.82), "plan-2500.jpg",
-                  (0.14, 0.00, 0.72, 0.58), "plan-2500-b.jpg"),
-    "n4000.jpg": ((0.14, 0.10, 0.94, 0.92), "plan-4000.jpg",
-                  (0.12, 0.06, 0.70, 0.64), "plan-4000-b.jpg"),
+                  (0.00, 0.04, 0.87, 0.68), "plan-2500-b.jpg"),
+    # El 4000 pasa a la peluquera de las piezas DUAL: emprendedora, su
+    # propio salon, mirando a camara.
+    "n4000.jpg": ((0.36, 0.05, 1.00, 0.70), "plan-4000.jpg",
+                  (0.00, 0.05, 0.93, 0.73), "plan-4000-b.jpg"),
 }
 
 
