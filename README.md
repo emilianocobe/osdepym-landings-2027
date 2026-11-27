@@ -109,6 +109,28 @@ Quedaron afuera los cursores, los glitches, el scroll horizontal y la
 distorsión: no informan nada acá y le hablan al revés a un público que
 teme los gastos ocultos.
 
+## El encuadre de las fotos
+
+De acá salieron las cabezas cortadas, así que queda escrito: `object-fit:
+cover` recorta por el lado que sobra. Si la imagen es más **angosta** que su
+caja, recorta arriba y abajo, y lo primero que se pierde es la cabeza.
+
+En el **camino A** la caja de la foto llega como máximo a 1,40 de relación, y
+los recortes salen a 1,46: siempre por encima, así que el alto entra entero y
+la cabeza no se puede cortar. La figura va en la mitad izquierda, donde el
+panel no llega.
+
+En el **camino B** la apertura ocupa la pantalla y la relación de la caja
+varía demasiado —de 0,5 en teléfono a 1,9 en escritorio— como para que haya
+un solo lado que sobre siempre. Ahí los recortes van a 1,50 con la cabeza
+bien adentro y `object-position: 78% 22%`, que mantiene la cara tanto cuando
+recorta a lo alto como cuando recorta a lo ancho. Y la figura va a la
+derecha, porque el arco entra por la izquierda.
+
+El chequeo verifica las dos cosas: que el panel no tape la franja de la
+cabeza —resolviendo la elipse del `border-radius` a esa altura— y que el
+encuadre no esté recortando el alto.
+
 ## Cómo se construye
 
 ```
@@ -128,10 +150,10 @@ horizontal, tipografía mínima, un solo `<h1>`, `alt` en las imágenes— a
 
 ## Pendiente
 
-- **Las fotos.** Solo la home lleva fotografía. Las páginas de plan resuelven
-  su cara izquierda con el número del plan sobre el azul de marca, que es una
-  decisión de diseño defendible —el plan es un producto, no una persona—,
-  pero si se prefieren fotos, se cambian en una línea de `contenido.py`.
+- **Las fotos** están elegidas pero son de banco. Si OSDEPYM encarga
+  producción propia, se reemplazan corriendo `_importar_fotos.py` con los
+  nuevos originales: ahí están las fracciones de recorte de cada una y la
+  regla de encuadre que impide que el `cover` corte cabezas.
 - **La diferencia real entre el 2500 y el 4000.** Con el contenido actual son
   casi la misma página: cambian un titular y una prestación. Es una decisión
   de Comercial, no de diseño.

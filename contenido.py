@@ -153,9 +153,9 @@ PLANES = [
         "oferta": None,
         "foto": "plan-1000.jpg",
         "foto_b": "plan-1000-b.jpg",
-        "foco": "center 34%",
+        "foco": "0% 50%",
         "numero": "1000",
-        "alt": "El dueño de un local, en la puerta de su negocio",
+        "alt": "Un almacenero revisando la mercadería en su mostrador",
         "destacados": [
             ("Atención primaria",
              "Consultas médicas generales para tu salud cotidiana."),
@@ -179,7 +179,7 @@ PLANES = [
         "oferta_cond": "Para personas de hasta 50 años.",
         "foto": "plan-2500.jpg",
         "foto_b": "plan-2500-b.jpg",
-        "foco": "center 38%",
+        "foco": "0% 50%",
         "numero": "2500",
         "alt": "Una familia caminando por un parque",
         "destacados": [
@@ -205,9 +205,9 @@ PLANES = [
         "oferta_cond": "Para personas de hasta 50 años.",
         "foto": "plan-4000.jpg",
         "foto_b": "plan-4000-b.jpg",
-        "foco": "center 32%",
+        "foco": "0% 50%",
         "numero": "4000",
-        "alt": "Una mujer en el living de su casa",
+        "alt": "Una mujer sonriendo en un parque, en otoño",
         "destacados": [
             ("Amplia red de prestadores",
              "Acceso a una extensa red de profesionales y centros médicos."),
@@ -257,14 +257,14 @@ COMPARADOR_NOTA = ("Cuadro comparativo según el alcance publicado de cada plan.
 # ancho de la imagen ya recortada. No es decorativo: el chequeo lo usa
 # para verificar que ni el panel ni el arco le tapen la cara.
 SUJETO = {
-    "home.jpg":        (0.26, 0.60),
-    "plan-1000.jpg":   (0.08, 0.42),
-    "plan-2500.jpg":   (0.22, 0.62),
-    "plan-4000.jpg":   (0.26, 0.58),
-    "home-b.jpg":      (0.50, 0.88),
-    "plan-1000-b.jpg": (0.52, 0.90),
-    "plan-2500-b.jpg": (0.42, 0.88),
-    "plan-4000-b.jpg": (0.46, 0.90),
+    "home.jpg":        (0.40, 0.56),
+    "plan-1000.jpg":   (0.36, 0.60),
+    "plan-2500.jpg":   (0.15, 0.58),
+    "plan-4000.jpg":   (0.47, 0.60),
+    "home-b.jpg":      (0.55, 0.78),
+    "plan-1000-b.jpg": (0.57, 0.86),
+    "plan-2500-b.jpg": (0.65, 0.79),
+    "plan-4000-b.jpg": (0.69, 0.86),
 }
 
 

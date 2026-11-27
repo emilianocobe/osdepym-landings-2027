@@ -73,6 +73,16 @@ JS = r"""
     var offX = (r.width - rw) * px;
     var x0 = r.left + offX + a*rw, x1 = r.left + offX + b*rw;
     var ancho = x1 - x0;
+    /* Si la imagen es mas angosta que su caja, el cover recorta ARRIBA y
+       ABAJO: ahi es donde se pierden las cabezas. En el camino A nunca
+       debe pasar, porque los recortes se hicieron para que no pase. */
+    if (img.closest('.lente')) {
+      var perdido = (nh*esc - r.height) / (nh*esc);
+      if (perdido > 0.02)
+        out.tapadas.push(img.getAttribute('src').split('/').pop() +
+          ': el encuadre recorta ' + Math.round(perdido*100) +
+          '% del alto (riesgo de cortar la cabeza)');
+    }
     var panel = document.querySelector('.lente__panel');
     var arco = document.querySelector('.apertura__arco');
     var tapa = 0, quien = '';

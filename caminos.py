@@ -346,7 +346,7 @@ CSS_B = CSS_A + """
   place-items:center;overflow:hidden;background:var(--navy2);isolation:isolate}
 .apertura__foto{position:absolute;inset:0;z-index:0}
 .apertura__foto img{width:100%;height:100%;object-fit:cover;
-  object-position:center 32%;filter:saturate(.72) contrast(1.06)}
+  object-position:78% 22%;filter:saturate(.76) contrast(1.05)}
 .apertura__velo{position:absolute;inset:0;z-index:1;background:
   linear-gradient(100deg,rgba(13,39,70,.96) 0%,rgba(26,27,49,.74) 44%,
   rgba(26,27,49,.30) 100%)}
