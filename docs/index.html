@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>OSDEPYM · Landings 2027 · Dos caminos</title>
+<meta name="description" content="Camino A y Camino B para las landings de los planes OSDEPYM, sobre el concepto de marca 2027.">
+<meta name="theme-color" content="#242541">
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="assets/fuentes/Gotham-Bold.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="assets/fuentes/Gotham-Book.woff2">
+<style>
+@font-face{font-family:'Gotham';src:url('assets/fuentes/Gotham-Light.woff2') format('woff2');font-weight:300;font-display:swap}
+@font-face{font-family:'Gotham';src:url('assets/fuentes/Gotham-Book.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Gotham';src:url('assets/fuentes/Gotham-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Gotham';src:url('assets/fuentes/Gotham-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+
+:root{
+  --azul:#0E4C86; --azulcl:#1D6FB8; --navy:#242541; --navy2:#1A1B31;
+  --verde:#1F5C38; --verdecl:#2E7D4F; --amar:#F2C300;
+  --tinta:#1C1F28; --suave:#5B6070; --suave2:#8A8F9E;
+  --linea:#DDE1E8; --lineao:#2E3350; --crema:#F6F4EE;
+  --azulp:#EDF3F9; --verdep:#EDF4EF;
+  --ff:'Gotham',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ancho:1180px; --gut:24px;
+  --dur:.5s; --ease:cubic-bezier(.2,.7,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--ff);font-weight:400;color:var(--tinta);
+  background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased;
+  font-feature-settings:"kern" 1,"liga" 1;overflow-x:hidden}
+img,svg{max-width:100%}
+h1,h2,h3,h4{font-family:var(--ff);margin:0;letter-spacing:-.018em;
+  line-height:1.08;font-weight:700;text-wrap:balance}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+a{color:inherit}
+.ic{width:24px;height:24px;flex:none}
+
+/* ---- contenedor ---- */
+.wrap{max-width:var(--ancho);margin:0 auto;padding:0 var(--gut);width:100%}
+section{position:relative}
+
+/* ---- filete tricolor: la firma del pie del manual ---- */
+.filete{display:flex;height:4px;width:96px;overflow:hidden;border-radius:2px}
+.filete i{flex:1}
+.filete i:nth-child(1){background:var(--azul)}
+.filete i:nth-child(2){background:var(--verde)}
+.filete i:nth-child(3){background:var(--amar)}
+
+/* ---- eyebrow ---- */
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;
+  font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--azul);margin:0}
+.eyebrow::before{content:"";width:26px;height:3px;border-radius:2px;
+  background:var(--amar);flex:none}
+.eyebrow.sobre-oscuro{color:#BFD4EA}
+
+/* ---- titulos ---- */
+.t-xl{font-size:clamp(34px,5.2vw,60px)}
+.t-lg{font-size:clamp(28px,3.6vw,42px)}
+.t-md{font-size:clamp(22px,2.4vw,28px)}
+.lead{font-size:clamp(17px,1.5vw,20px);line-height:1.52;font-weight:300;
+  color:var(--suave);max-width:62ch}
+.lead.sobre-oscuro{color:#C7D2E3}
+
+/* ---- botones ---- */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--ff);
+  font-size:14px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  line-height:1;padding:17px 30px;border-radius:9px;text-decoration:none;
+  border:2px solid transparent;cursor:pointer;transition:background .18s,
+  color .18s,border-color .18s}
+.btn .ic{width:18px;height:18px}
+.btn-p{background:var(--amar);color:var(--navy);border-color:var(--amar)}
+.btn-p:hover,.btn-p:focus-visible{background:#FFD426;border-color:#FFD426}
+.btn-s{background:transparent;color:var(--azul);border-color:var(--linea)}
+.btn-s:hover,.btn-s:focus-visible{border-color:var(--azul);background:var(--azulp)}
+.btn-o{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-o:hover,.btn-o:focus-visible{border-color:#fff;background:rgba(255,255,255,.1)}
+:focus-visible{outline:3px solid var(--amar);outline-offset:3px}
+
+/* ---- LA CURVA: media elipse en el borde del panel ---- */
+.lente{position:relative;display:grid;grid-template-columns:1fr 1fr;
+  align-items:stretch;min-height:clamp(420px,56vw,620px)}
+.lente__foto{position:relative;overflow:hidden;background:var(--navy)}
+/* Cuando la pagina es de producto y no de persona, la cara izquierda
+   es grafica: el numero del plan en Gotham, sobre el azul de marca. */
+.lente__foto--num{display:grid;place-items:center;background:
+  radial-gradient(118% 88% at 28% 18%,#1B5AA0 0%,#123B6B 46%,#0D2746 100%)}
+.lente__num{display:flex;flex-direction:column;align-items:center;gap:12px;
+  color:#fff;padding:40px 20px;text-align:center}
+.lente__num i{font-style:normal;font-size:12px;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:#9FB4CE}
+.lente__num span{font-size:clamp(78px,12vw,164px);font-weight:700;
+  line-height:.88;letter-spacing:-.045em}
+.lente__num .filete{margin-top:6px}
+.lente__foto img{width:100%;height:100%;object-fit:cover;display:block}
+.lente__panel{position:relative;background:
+  linear-gradient(140deg,#144580 0%,#163F72 48%,var(--navy) 100%);
+  color:#fff;display:flex;flex-direction:column;justify-content:center;
+  gap:22px;padding:clamp(34px,4.4vw,64px) clamp(26px,4vw,64px);
+  margin-left:-10%;
+  /* La curva de las laminas es un arco suave que recorre todo el alto,
+     no un circulo: un radio horizontal mas chico la aplana. */
+  border-top-left-radius:30% 50%;border-bottom-left-radius:30% 50%;
+  padding-left:clamp(60px,12vw,170px)}
+.lente__panel > *{position:relative;z-index:1}
+
+/* ---- franja de datos ---- */
+.datos{background:var(--navy);color:#fff}
+.datos ul{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  background:var(--lineao)}
+.datos li{background:var(--navy);padding:26px 22px}
+.datos b{display:block;font-size:19px;font-weight:700;margin-bottom:5px}
+.datos span{font-size:14px;line-height:1.4;color:#AEB8CC;font-weight:300}
+
+/* ---- tarjetas ---- */
+.cards{display:grid;gap:14px}
+.card{border:1px solid var(--linea);border-radius:12px;padding:24px 22px;
+  background:#fff}
+.card .ic{color:var(--azul);margin-bottom:12px}
+.card h3{font-size:16px;margin-bottom:8px;color:var(--navy);line-height:1.3}
+.card p{font-size:15px;line-height:1.45;color:var(--suave);font-weight:300}
+
+/* ---- dimensiones ---- */
+.dim{border-radius:14px;overflow:hidden;border:1px solid var(--linea);
+  display:flex;flex-direction:column;background:#fff}
+.dim__top{background:var(--verde);color:#fff;padding:20px 22px 18px;
+  display:flex;align-items:center;gap:12px}
+.dim__top .ic{color:var(--amar)}
+.dim__top b{font-size:12px;font-weight:700;letter-spacing:.11em;
+  text-transform:uppercase;display:block}
+.dim__top span{font-size:17px;font-weight:700;display:block;margin-top:2px}
+.dim__body{padding:20px 22px 22px;flex:1}
+.dim__body p{font-size:15px;line-height:1.45;color:var(--suave);
+  font-weight:300;margin-bottom:14px}
+.dim__body li{font-size:15px;line-height:1.4;display:flex;gap:9px;
+  align-items:flex-start;padding:6px 0;color:var(--tinta)}
+.dim__body li .ic{width:17px;height:17px;color:var(--verdecl);margin-top:3px}
+.dim__body li.pronto{color:var(--suave2)}
+.dim__body li.pronto .ic{color:var(--suave2)}
+.dim__body em{font-style:normal;font-size:11px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--suave2);
+  border:1px solid var(--linea);border-radius:10px;padding:2px 7px;
+  margin-left:6px;white-space:nowrap}
+
+/* ---- comparador ---- */
+.comp{width:100%;border-collapse:collapse;font-size:15px}
+.comp caption{text-align:left;font-size:13px;color:var(--suave);
+  font-weight:300;padding-bottom:14px;line-height:1.45}
+.comp th,.comp td{padding:13px 14px;border-bottom:1px solid var(--linea);
+  text-align:left;vertical-align:top;position:relative}
+.comp thead th{font-size:12px;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--suave);border-bottom:2px solid var(--navy);
+  white-space:nowrap}
+.comp thead th.p{color:var(--navy);font-size:15px;letter-spacing:.02em;
+  text-transform:none}
+.comp tbody th{font-weight:400;color:var(--tinta);width:38%}
+.comp td{text-align:center;width:20.6%;color:var(--suave);font-weight:300;
+  font-size:13.5px;line-height:1.35}
+.comp td .ic{width:20px;height:20px;color:var(--verdecl)}
+.comp td.no{color:var(--suave2)}
+.comp td.no span{display:inline-block;width:14px;height:2px;border-radius:1px;
+  background:var(--linea)}
+.comp col.destacado{background:var(--azulp)}
+.comp tfoot td{border-bottom:none;padding-top:18px}
+.comp-hint{display:none;font-size:12.5px;color:var(--suave2);
+  font-weight:300;margin-top:10px}
+
+/* ---- formulario de Bitrix ---- */
+.form{background:#fff;border:1px solid var(--linea);border-radius:14px;
+  padding:clamp(22px,3vw,34px);box-shadow:0 18px 48px -28px rgba(20,40,80,.4)}
+.form h3{font-size:20px;color:var(--navy);margin-bottom:8px}
+.form > p{font-size:15px;color:var(--suave);font-weight:300;line-height:1.45;
+  margin-bottom:20px}
+.form__caja{min-height:260px}
+.form__ph{display:flex;align-items:center;gap:10px;color:var(--suave2);
+  font-size:14px;padding:30px 0}
+.form__ph i{width:16px;height:16px;border:2px solid var(--linea);
+  border-top-color:var(--azul);border-radius:50%;
+  animation:gira .8s linear infinite;flex:none}
+@keyframes gira{to{transform:rotate(360deg)}}
+.form .b24-form-btn:not(.b24-form-btn-border){background:var(--amar)!important;
+  border-color:var(--amar)!important;color:var(--navy)!important;
+  font-weight:700!important;font-family:var(--ff)!important;
+  text-transform:uppercase!important;letter-spacing:.05em!important;
+  border-radius:9px!important}
+.form .b24-form-btn:not(.b24-form-btn-border):hover{background:#FFD426!important;
+  border-color:#FFD426!important}
+.form .b24-form-border-bottom{border-bottom-color:var(--azul)!important}
+.form .b24-form-wrapper{font-family:var(--ff)!important}
+.form .b24-form-header{display:none!important}
+.form__nota{font-size:12px;color:var(--suave2);font-weight:300;
+  line-height:1.45;margin-top:14px}
+
+/* ---- DUAL ---- */
+.dual{background:var(--crema);border-left:5px solid var(--amar);
+  padding:20px 24px;border-radius:0 10px 10px 0}
+.dual p{font-size:16px;line-height:1.45;color:#223428}
+.dual b{font-weight:700;color:var(--navy)}
+
+/* ---- rubros ---- */
+.rubros{display:flex;flex-wrap:wrap;gap:8px}
+.rubros li{font-size:13px;font-weight:500;padding:8px 15px;border-radius:16px;
+  background:var(--verdep);color:var(--verde);
+  box-shadow:inset 0 0 0 1px #CFE2D6}
+
+/* ---- cabecera ---- */
+.head{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(1.6) blur(10px);border-bottom:1px solid var(--linea)}
+.head__in{display:flex;align-items:center;justify-content:space-between;
+  gap:18px;height:68px}
+.head__logo img{height:30px;width:auto;display:block}
+.head nav{display:flex;align-items:center;gap:26px}
+.head nav a{font-size:14px;font-weight:500;color:var(--tinta);
+  text-decoration:none}
+.head nav a:hover{color:var(--azul)}
+.head .btn{padding:12px 20px;font-size:12.5px}
+
+/* ---- pie ---- */
+.pie{background:var(--navy);color:#fff;padding:52px 0 34px;margin-top:0}
+.pie__top{display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;
+  align-items:flex-start;padding-bottom:28px;border-bottom:1px solid var(--lineao)}
+.pie__logo img{height:38px;width:auto;display:block;margin-bottom:12px}
+.pie__logo p{font-size:13px;color:#AEB8CC;font-weight:300;max-width:34ch;
+  line-height:1.5}
+.pie__tel{display:inline-flex;align-items:center;gap:10px;font-size:19px;
+  font-weight:700;color:#fff;text-decoration:none;background:rgba(255,255,255,.08);
+  border:1px solid var(--lineao);border-radius:28px;padding:12px 22px}
+.pie__legal{font-size:12px;line-height:1.6;color:#8E97AC;font-weight:300;
+  padding-top:22px;max-width:92ch}
+.pie__legal b{color:#C7D2E3;font-weight:500}
+
+/* ---- aviso de prototipo ---- */
+.proto{background:var(--amar);color:var(--navy);font-size:12.5px;
+  font-weight:500;text-align:center;padding:9px 16px;line-height:1.4}
+.proto b{font-weight:700}
+.proto a{color:var(--navy)}
+
+/* ---- reveals (E23 del catálogo: nunca oculta sin JS) ---- */
+.rv{opacity:0;transform:translateY(14px);transition:opacity var(--dur) var(--ease),
+  transform var(--dur) var(--ease)}
+html:not(.js) .rv{opacity:1;transform:none}
+.rv.visible{opacity:1;transform:none}
+
+/* ---- movimiento reducido: total, como manda la regla 7 ---- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;
+    scroll-behavior:auto!important}
+  .rv{opacity:1!important;transform:none!important}
+}
+
+/* ---- responsive ---- */
+@media (max-width:1000px){
+  .datos ul{grid-template-columns:repeat(2,1fr)}
+  .comp{font-size:14px}
+  .comp th,.comp td{padding:11px 9px}
+  .comp tbody th{width:34%}
+}
+@media (max-width:860px){
+  .lente{grid-template-columns:1fr;min-height:0}
+  .lente__foto{height:clamp(240px,46vw,360px)}
+  .lente__panel{margin-left:0;margin-top:-13%;padding-left:clamp(26px,6vw,44px);
+    padding-top:clamp(56px,13vw,86px);
+    border-radius:50% 50% 0 0 / 13% 13% 0 0}
+  .head nav{display:none}
+}
+@media (max-width:620px){
+  :root{--gut:20px}
+  .comp-hint{display:block}
+  .comp thead th.p{font-size:13px}
+  .comp td{font-size:12.5px;padding:10px 5px}
+  .comp tbody th{font-size:13px;width:40%}
+  .pie__top{flex-direction:column}
+}
+
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+body{background:var(--navy2);color:#fff}
+.port{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+.port__top{padding:clamp(34px,5vw,58px) 0 0}
+.port__logo img{height:40px;width:auto;display:block}
+.port__in{flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(34px,5vw,64px) 0}
+.port__head{max-width:70ch;display:flex;flex-direction:column;gap:18px;
+  margin-bottom:clamp(34px,4.6vw,56px)}
+.port__head h1{font-size:clamp(32px,4.6vw,54px);color:#fff}
+.port__head p{font-size:clamp(16px,1.5vw,19px);line-height:1.55;color:#C7D2E3;
+  font-weight:300;max-width:68ch}
+.caminos{display:grid;gap:18px;grid-template-columns:repeat(2,1fr)}
+.cam{display:flex;flex-direction:column;gap:16px;padding:clamp(26px,3.2vw,40px);
+  border:1px solid var(--lineao);border-radius:18px;
+  background:linear-gradient(160deg,rgba(20,69,128,.42),rgba(31,32,57,.42));
+  text-decoration:none;color:#fff;transition:border-color .2s,transform .2s,
+  background .2s}
+.cam:hover,.cam:focus-visible{border-color:var(--amar);transform:translateY(-3px);
+  background:linear-gradient(160deg,rgba(20,69,128,.62),rgba(31,32,57,.52))}
+.cam__let{font-size:13px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--amar)}
+.cam h2{font-size:clamp(24px,2.8vw,34px)}
+.cam h2 span{display:block;font-size:.62em;color:#9FB4CE;font-weight:500;
+  letter-spacing:0;margin-top:6px}
+.cam p{font-size:15.5px;line-height:1.5;color:#C7D2E3;font-weight:300}
+.cam .para{font-size:13.5px;color:#9FB4CE;border-top:1px solid var(--lineao);
+  padding-top:14px}
+.cam .ver{display:inline-flex;align-items:center;gap:9px;font-size:13px;
+  font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--amar);margin-top:auto}
+.cam .ver .ic{width:17px;height:17px}
+.port__pie{border-top:1px solid var(--lineao);padding:22px 0 30px;
+  font-size:12.5px;color:#8E97AC;font-weight:300;line-height:1.6}
+.port__pie b{color:#C7D2E3;font-weight:500}
+.fuentes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fuentes li{font-size:11.5px;font-weight:500;padding:6px 13px;border-radius:14px;
+  background:rgba(255,255,255,.05);color:#AEB8CC;
+  box-shadow:inset 0 0 0 1px var(--lineao)}
+@media (max-width:820px){.caminos{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="port">
+  <div class="wrap port__top">
+    <div class="port__logo">
+      <img src="assets/osdepym-blanco.png" alt="OSDEPYM · Te estamos cuidando"
+           width="220" height="59">
+    </div>
+  </div>
+  <div class="wrap port__in">
+    <div class="port__head">
+      <div class="filete" aria-hidden="true"><i></i><i></i><i></i></div>
+      <h1>Landings 2027. Dos caminos.</h1>
+      <p>Las landings de los planes 1000, 2500 y 4000 reconstruidas sobre el
+         concepto de marca 2027. Mismo contenido, mismos formularios de
+         Bitrix24, mismas prestaciones: lo que cambia es cómo se cuenta.
+         Los dos caminos están completos y son navegables.</p>
+    </div>
+    <div class="caminos"><a class="cam" href="a/index.html">
+  <span class="cam__let">Camino A</span>
+  <h2>Claridad<span>Lo que pagás y lo que recibís, a la vista.</span></h2>
+  <p>El camino que lleva el concepto 2027 al terreno donde la marca es más fuerte: decirlo claro. Luminoso, editorial, con la comparación de planes en el centro de la página y el precio sin letra chica. Movimiento medido, que baja a cero cuando empieza el formulario.</p>
+  <p class="para">Para convertir. Es el camino que recomendamos para producción.</p>
+  <span class="ver">Ver el camino A <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"/></svg></span>
+</a><a class="cam" href="b/index.html">
+  <span class="cam__let">Camino B</span>
+  <h2>Recorrido<span>La mirada completa, como un recorrido.</span></h2>
+  <p>El camino audaz. La curva de la marca deja de ser un adorno y pasa a ser el mecanismo: la página se abre como una lente. Las cuatro dimensiones del bienestar se atraviesan en oscuro, y al llegar a la decisión todo invierte a claro, sin efectos.</p>
+  <p class="para">Para presentar. Muestra hasta dónde puede estirarse la identidad sin romperla.</p>
+  <span class="ver">Ver el camino B <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"/></svg></span>
+</a></div>
+  </div>
+  <div class="wrap port__pie">
+    <p><b>Prototipo de presentación · ecobe para OSDEPYM · noviembre 2026.</b>
+       No es un sitio oficial. Los formularios son los de producción: lo que se
+       envíe entra en Bitrix24 como un lead real.</p>
+    <ul class="fuentes"><li>Documento Brand Life · septiembre 2026</li><li>Bajada a Conceptos · octubre 2026</li><li>Export de landingpm.osdepym.com.ar · 26/11/2026</li><li>Sección DUAL aprobada · noviembre 2026</li><li>Formularios de Bitrix24 en producción</li></ul>
+  </div>
+</div>
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!RM && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:.08});
+    document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('visible'); });
+  }
+  document.querySelectorAll('[data-form]').forEach(function(caja){
+    var ph = caja.querySelector('.form__ph');
+    if (!ph) return;
+    var t0 = Date.now();
+    var iv = setInterval(function(){
+      if (caja.querySelector('.b24-form, .b24-form-wrapper, form, iframe')) {
+        ph.remove(); clearInterval(iv);
+      } else if (Date.now() - t0 > 12000) {
+        ph.innerHTML = '<span>No pudimos cargar el formulario. ' +
+          'Escribinos o llamanos al 0800-288-8432.</span>';
+        clearInterval(iv);
+      }
+    }, 300);
+  });
+})();
+</script>
+</body>
+</html>
